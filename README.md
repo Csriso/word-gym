@@ -39,19 +39,12 @@ Vocabulary pronunciation trainer, where you can see different words or collectio
 ```
 
 ```http
-  GET /login
+
+  GET /login    POST /login
 ```
 
 ```http
-  POST /login
-```
-
-```http
-  GET /register
-```
-
-```http
-  POST /register
+  GET /register    POST /register
 ```
 
 #### Word Routes
@@ -65,11 +58,7 @@ Vocabulary pronunciation trainer, where you can see different words or collectio
 #### Word create
 
 ```http
-  GET /word/create
-```
-
-```http
-  POST /word/create
+  GET /word/create  POST /word/create
 ```
 
 #### Word Details
@@ -101,11 +90,7 @@ Vocabulary pronunciation trainer, where you can see different words or collectio
 #### Collection create
 
 ```http
-  GET /collection/create
-```
-
-```http
-  POST /collection/create
+  GET /collection/create     POST /collection/create
 ```
 
 #### Collection Details
