@@ -2,5 +2,6 @@
     {"word": "Hello", "audio": "https://api.dictionaryapi.dev/media/pronunciations/en/hello-uk.mp3", "definition": "A greeting (salutation) said when meeting someone or acknowledging someone’s arrival or presence."},
     {"word": "World", "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/world-us.mp3", "definition": "The Earth."},
     {"word": "program", "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/program-us.mp3", "definition": "A software application, or a collection of software applications, designed to perform a specific task."},
+    {"word": "programming", "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/program-us.mp3", "definition": "blahblah"},
     {"word": "javascript", "audioUrl": "", "definition": "Programming language"}
 ]

@@ -60,15 +60,16 @@ async function addWordFromApi(word){
 //deleteWords();
 //
 
-/*
+
 Promise.allSettled([
     addWords()
 ]).then(response=>{console.log(response)})
 .catch((err)=>{
     console.log(err)
 })
-*/
 
+
+/*
 getWordFromApi("hello")
 .then((response)=>{
     console.log(response)
@@ -76,7 +77,7 @@ getWordFromApi("hello")
 .catch((err)=>{
     console.log(err)
 })
-
+*/
 /*
 axios.get(APIurl+"hello")
     .then((response)=>{
