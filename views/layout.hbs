@@ -6,12 +6,24 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>{{appTitle}}</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link
+    {{! <link
       rel="stylesheet"
       href="https://unpkg.com/flowbite@1.4.5/dist/flowbite.min.css"
-    />
+    /> }}
+    {{! <link rel="stylesheet" href="/stylesheets/tailwinds.css" /> }}
     <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
     <link rel="stylesheet" href="/stylesheets/style.css" />
+    <script>
+      if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in
+      localStorage) &&
+      window.matchMedia('(prefers-color-scheme:dark)').matches)) {
+      document.documentElement.classList.add('dark'); } else {
+      document.documentElement.classList.remove('dark') }
+    </script>
+    <script>
+      tailwind.config = { darkMode: "class", content: ["./src/**/*.{html,js}"],
+      theme: { extend: { colors: { clifford: '#da373d', } } } }
+    </script>
   </head>
 
   <body class="bg-white dark:bg-neutral-900">
@@ -22,7 +34,7 @@
         transparent; /* make scrollbar transparent */ }
       </style>
 
-      <nav class="bg-white shadow dark:bg-gray-800">
+      <nav class="bg-gray-800 shadow dark:bg-gray-800 text-white">
         <div class="container px-6 py-3 mx-auto">
           <div
             class="flex flex-col md:flex-row md:justify-between md:items-center"
@@ -30,7 +42,7 @@
             <div class="flex items-center justify-between">
               <div class="flex items-center">
                 <a
-                  class="w-1/12 text-2xl font-bold text-gray-800 transition-colors duration-200 transform dark:text-white lg:text-3xl hover:text-gray-700 dark:hover:text-gray-300"
+                  class="w-1/12 text-2xl font-bold text-white transition-colors duration-200 transform dark:text-white lg:text-3xl hover:text-gray-700 dark:hover:text-gray-300"
                   href="/"
                 ><img src="/images/logo.png" alt="" srcset="" /></a>
 
@@ -68,7 +80,7 @@
               <div class="flex md:hidden">
                 <button
                   type="button"
-                  class="text-gray-500 dark:text-gray-200 hover:text-gray-600 dark:hover:text-gray-400 focus:outline-none focus:text-gray-600 dark:focus:text-gray-400"
+                  class="text-white dark:text-gray-200 hover:text-gray-600 dark:hover:text-gray-400 focus:outline-none focus:text-gray-600 dark:focus:text-gray-400"
                   aria-label="toggle menu"
                 >
                   <svg viewBox="0 0 24 24" class="w-6 h-6 fill-current">
@@ -85,19 +97,19 @@
             <div class="items-center md:flex">
               <div class="flex flex-col mt-2 md:flex-row md:mt-0 md:mx-1">
                 <a
-                  class="my-1 text-sm leading-5 text-gray-700 transition-colors duration-200 transform dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 hover:underline md:mx-4 md:my-0"
+                  class="my-1 text-sm leading-5 text-white transition-colors duration-200 transform dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 hover:underline md:mx-4 md:my-0"
                   href="/"
                 >Home</a>
                 <a
-                  class="my-1 text-sm leading-5 text-gray-700 transition-colors duration-200 transform dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 hover:underline md:mx-4 md:my-0"
+                  class="my-1 text-sm leading-5 text-white transition-colors duration-200 transform dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 hover:underline md:mx-4 md:my-0"
                   href="/word/"
                 >Words</a>
                 <a
-                  class="my-1 text-sm leading-5 text-gray-700 transition-colors duration-200 transform dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 hover:underline md:mx-4 md:my-0"
+                  class="my-1 text-sm leading-5 text-white transition-colors duration-200 transform dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 hover:underline md:mx-4 md:my-0"
                   href="/collection/"
                 >Collections</a>
                 <a
-                  class="my-1 text-sm leading-5 text-gray-700 transition-colors duration-200 transform dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 hover:underline md:mx-4 md:my-0"
+                  class="my-1 text-sm leading-5 text-white transition-colors duration-200 transform dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 hover:underline md:mx-4 md:my-0"
                   href="/collection/my"
                 >My collections</a>
               </div>
@@ -119,7 +131,34 @@
                   >Register</a>
                 {{/if}}
               </div>
-
+              <div class="flex items-center py-2 -mx-1 md:mx-0 pl-5">
+                <button
+                  id="theme-toggle"
+                  type="button"
+                  class="text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2.5"
+                >
+                  <svg
+                    id="theme-toggle-dark-icon"
+                    class="hidden w-5 h-5"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                    xmlns="http://www.w3.org/2000/svg"
+                  ><path
+                      d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"
+                    ></path></svg>
+                  <svg
+                    id="theme-toggle-light-icon"
+                    class="hidden w-5 h-5"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                    xmlns="http://www.w3.org/2000/svg"
+                  ><path
+                      d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"
+                      fill-rule="evenodd"
+                      clip-rule="evenodd"
+                    ></path></svg>
+                </button>
+              </div>
               <!-- Search input on mobile screen -->
               <div class="mt-3 md:hidden">
                 <div class="relative">

@@ -1,3 +1,6 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 body {
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
