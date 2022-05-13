@@ -14,7 +14,7 @@ const getWordFromApi = async (word) => {
     };
     return content;
   } catch (err) {
-    console.log(err);
+    return err;
   }
 };
 

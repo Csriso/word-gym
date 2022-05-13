@@ -21,7 +21,7 @@ router.get("/my", isLoggedIn, async (req, res, next) => {
   }
 });
 
-router.get("/create", (req, res, next) => {
+router.get("/create", isLoggedIn, (req, res, next) => {
   res.render("wordset/create.hbs");
 });
 
