@@ -1,5 +1,14 @@
-<h1>Wordsets</h1>
+<section
+  class="max-w-7xl p-6 mx-auto bg-white rounded-md shadow-md dark:bg-gray-800 mt-6 text-white"
+>
 
-{{#each wordSets}}
+  {{#unless myCollections}}
+    <h1>Wordsets</h1>
+  {{else}}
+    <h1>My collections</h1>
+  {{/unless}}
+
+  {{#each wordSets}}
     <h2>{{this}}</h2>
-{{/each}}
+  {{/each}}
+</section>

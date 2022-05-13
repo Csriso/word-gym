@@ -1,8 +1,8 @@
 const router = require("express").Router();
 const { getWordFromApi } = require("../utils/getWord");
 
-router.get("/:word", (req, res, next) => {
-  const { word } = req.params;
+router.post("/", (req, res, next) => {
+  const { word } = req.body;
   console.log(word);
   getWordFromApi(word)
     .then((response) => {
@@ -14,6 +14,10 @@ router.get("/:word", (req, res, next) => {
     .catch((err) => {
       console.log(err);
     });
+});
+
+router.get("/", (req, res, next) => {
+  res.render("word/findWord.hbs");
 });
 
 module.exports = router;

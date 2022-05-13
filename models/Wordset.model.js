@@ -9,6 +9,10 @@ const wordSetSchema = new mongoose.Schema(
     },
     image: String,
     words: [String],
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    },
   },
   {
     timestamps: true,
