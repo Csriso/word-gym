@@ -28,16 +28,20 @@ router.get("/create", isLoggedIn, (req, res, next) => {
 });
 
 router.post("/create", isLoggedIn, (req, res, next) => {
-  console.log(req.body);
-  const { name } = req.body
-  WordSetModel.create( {"name": name, "user": req.session.user})
-    .then((response) => {
-      res.redirect("/collection/my");
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-});
+    const { name } = req.body;
+    let private = false;
+    if (req.body.private === "") {
+      private = true;
+    }
+    WordSetModel.create({ name: name, user: req.session.user, private: private })
+      .then((response) => {
+        res.redirect("/collection/my");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  });
+  
 
 router.get("/:id", async (req, res, next) => {
     const { id } = req.params
@@ -46,9 +50,10 @@ router.get("/:id", async (req, res, next) => {
       if(String(wordSet.user) !== req.session.user._id){ //|| !wordSet.private
         res.redirect("/collection")
       }
+      const wordsStr=wordSet.words.join(", ")
       //console.log("wordset id", id, wordSet)
       //console.log(wordSet)
-      res.render("wordset/wordset.hbs", { wordSet });
+      res.render("wordset/wordset.hbs", { wordSet, wordsStr  });
     } catch (err) {
       console.log(err);
     }
@@ -57,11 +62,14 @@ router.get("/:id", async (req, res, next) => {
   router.post("/:id", async (req, res, next) => {
     const { id } = req.params
     const { name, words } = req.body
+    wordsArr = words.split(", ")
     try {
       const wordSet = await WordSetModel.findById(id);
       if(String(wordSet.user) !== req.session.user._id){
         res.redirect("/collection")
         }
+        await WordSetModel.findByIdAndUpdate(id, {words: wordsArr})
+    
       console.log("wordset id", id, wordSet)
       console.log(wordSet)
       res.render("wordset/wordset.hbs", { wordSet });

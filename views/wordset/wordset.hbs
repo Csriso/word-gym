@@ -1,1 +1,11 @@
-{{wordSet}}
+<form method="POST" action="/collection/{{wordSet._id}}">
+<label for="name">Name:</label>
+<br>
+<input type="text" name="name" value="{{wordSet.name}}">
+<br>
+<label for="words">Words:</label>
+<br>
+<input type="text" name="words" value="{{wordSet.wordsStr}}">
+<br>
+<button>Submit</button>
+</form>
