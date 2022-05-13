@@ -18,11 +18,8 @@ const deleteWords = async () => {
 }
 const addWords = async () => {
     try {
-
-        
         await WordModel.deleteMany();
         const response = await WordModel.insertMany(wordArray)
-        console.log("Added words")
         return response
     }
     catch(err){
@@ -35,56 +32,27 @@ const addWords = async () => {
 
 const APIurl="https://api.dictionaryapi.dev/api/v2/entries/en/"
 
-const getWordFromApi = (word) =>{
-
-    axios.get(APIurl+word)
-    .then((response => {
-        return response;
-    }))
-    .catch((err)=>{
+const getWordFromApi = async (word) =>{
+    try{
+        const response = await axios.get(APIurl+word)
+        const content = {
+            word: response.data[0].word,
+            audio: response.data[0].phonetics[0].audio,
+            meanings: response.data[0].meanings
+        }
+        return content
+    }catch(err){
         console.log(err)
-    })
+    }
 }
-/*
-async function addWordFromApi(word){
-    await axios.get(APIurl+word)
-    .then((response)=>{
-        console.log("Word:" + response.data[0].word)
-        console.log("Audio:" + response.data[0].phonetics[0].audio)
-        console.log("MeaningsArr: " + response.data[0].meanings)
-        return response
-    })
-    .catch(err => console.log(err))
-}
-*/
-//deleteWords();
-//
+
+Promise.all([getWordFromApi("Hello")])
+.then((response)=>{console.log(response)})
 
 
 Promise.allSettled([
     addWords()
-]).then(response=>{console.log(response)})
+]).then(response=>{})
 .catch((err)=>{
     console.log(err)
 })
-
-
-/*
-getWordFromApi("hello")
-.then((response)=>{
-    console.log(response)
-})
-.catch((err)=>{
-    console.log(err)
-})
-*/
-/*
-axios.get(APIurl+"hello")
-    .then((response)=>{
-        console.log("Word:" + response.data[0].word)
-        console.log("Audio:" + response.data[0].phonetics[0].audio)
-        console.log("MeaningsArr: " + response.data[0].meanings)
-        return response
-    })
-    .catch(err => console.log(err))
-    */
