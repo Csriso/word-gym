@@ -13,6 +13,19 @@ router.get("/", async (req, res, next) => {
   }
 });
 
+router.get("/:id", async (req, res, next) => {
+    const { id } = req.params
+    try {
+      const wordSet = await WordSetModel.findById(id).populate('user');
+      console.log("wordset id", id, wordSet)
+      console.log(wordSet)
+      res.render("wordset/wordset.hbs", { wordSet });
+    } catch (err) {
+      console.log(err);
+    }
+  });
+
+
 router.get("/my", isLoggedIn, async (req, res, next) => {
   try {
     const wordSets = await WordSetModel.find().populate('user');;
