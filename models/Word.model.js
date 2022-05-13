@@ -1,14 +1,14 @@
-const { Schema, model } = require("mongoose");
+const mongoose = require("mongoose")
 
 // TODO: Please make sure you edit the user model to whatever makes sense in this case
-const wordSchema = new Schema(
+const wordSchema = new mongoose.Schema(
   {
     word: {
       type: String,
       unique: true,
       required: true
     },
-    audioUrl: {
+    audio: {
         type: String
     },
     definition: {
@@ -26,6 +26,6 @@ const wordSchema = new Schema(
   }
 );
 
-const Word = model("Word", wordSchema);
+const Word = mongoose.model("Word", wordSchema);
 
 module.exports = Word;
