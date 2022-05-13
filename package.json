@@ -16,7 +16,9 @@
     "hbs": "^4.2.0",
     "mongoose": "^6.3.3",
     "morgan": "^1.10.0",
-    "serve-favicon": "^2.5.0"
+    "serve-favicon": "^2.5.0",
+    "tailwindcss": "^3.0.24",
+    "wordreference-api": "^1.1.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.16"
