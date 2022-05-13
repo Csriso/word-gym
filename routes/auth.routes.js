@@ -45,7 +45,7 @@ router.post("/signup", async (req, res, next) => {
         "contraseña no valida, necesita 8 char, una letra y un numero",
       email: email,
     });
-    return; // hasta aqui llega mi ruta
+    return;
   }
 
   try {
