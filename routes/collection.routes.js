@@ -61,6 +61,22 @@ router.post("/:id/uploadImage", isLoggedIn, uploader.single("image"), async (req
         next(err)
     }
 })
+
+router.get("/:id/train", isLoggedIn, async(req, res, next)=>{
+    const { id } = req.params
+
+    try {
+        const wordSet = await WordSetModel.findById(id)
+        if(String(wordSet.user) !== req.session.user._id){ //|| !wordSet.private
+          res.redirect("/collection")
+        }
+        res.render("wordset/train.hbs", {wordSet})
+
+    }catch(err){
+        console.log(err)
+    }
+
+})
   
 
 router.get("/:id", async (req, res, next) => {
