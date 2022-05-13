@@ -1,154 +1,124 @@
 const router = require("express").Router();
-
-// ℹ️ Handles password encryption
 const bcrypt = require("bcrypt");
-const mongoose = require("mongoose");
+const UserModel = require("../models/User.model");
 
-// How many rounds should bcrypt run the salt (default [10 - 12 rounds])
-const saltRounds = 10;
-
-// Require the User model in order to interact with the database
-const User = require("../models/User.model");
-
-// Require necessary (isLoggedOut and isLiggedIn) middleware in order to control access to specific routes
-const isLoggedOut = require("../middleware/isLoggedOut");
-const isLoggedIn = require("../middleware/isLoggedIn");
-
-router.get("/signup", isLoggedOut, (req, res) => {
-  res.render("auth/signup");
+// @desc    Signup User
+// @route   GET /auth/signup
+// @access  Public
+router.get("/signup", (req, res, next) => {
+  res.render("auth/signup.hbs", { noHeader: true });
 });
 
-router.post("/signup", isLoggedOut, (req, res) => {
-  const { username, password } = req.body;
+// @desc    Signup User
+// @route   POST /auth/signup
+// @access  Public
+router.post("/signup", async (req, res, next) => {
+  const { email, password, repeatPassword } = req.body;
 
-  if (!username) {
-    return res.status(400).render("auth/signup", {
-      errorMessage: "Please provide your username.",
+  if (!email || !password) {
+    res.render("auth/signup.hbs", {
+      errorMessage: "Fill out all the inputs",
+      email: email,
     });
+    return;
   }
-
   if (password.length < 8) {
-    return res.status(400).render("auth/signup", {
-      errorMessage: "Your password needs to be at least 8 characters long.",
+    res.render("auth/signup.hbs", {
+      errorMessage: "Password has to be at least 8 characters long",
+      email: email,
     });
+    return;
   }
 
-  //   ! This use case is using a regular expression to control for special characters and min length
+  if (password !== repeatPassword) {
+    res.render("auth/signup.hbs", {
+      errorMessage: "Passwords dosent match.",
+      email: email,
+    });
+    return;
+  }
 
-  const regex = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/;
-
-  if (!regex.test(password)) {
-    return res.status(400).render("signup", {
+  const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+  if (passwordRegex.test(password) === false) {
+    res.render("auth/signup", {
       errorMessage:
-        "Password needs to have at least 8 chars and must contain at least one number, one lowercase and one uppercase letter.",
+        "contraseña no valida, necesita 8 char, una letra y un numero",
+      email: email,
     });
+    return;
   }
 
-  // Search the database for a user with the username submitted in the form
-  User.findOne({ username }).then((found) => {
-    // If the user is found, send the message username is taken
-    if (found) {
-      return res
-        .status(400)
-        .render("auth.signup", { errorMessage: "Username already taken." });
+  try {
+    const foundUser = await UserModel.findOne({ email: email });
+    if (foundUser) {
+      res.render("auth/signup.hbs", {
+        errorMessage: "Email already in use",
+      });
+      return;
     }
 
-    // if user is not found, create a new user - start with hashing the password
-    return bcrypt
-      .genSalt(saltRounds)
-      .then((salt) => bcrypt.hash(password, salt))
-      .then((hashedPassword) => {
-        // Create a user and save it in the database
-        return User.create({
-          username,
-          password: hashedPassword,
-        });
-      })
-      .then((user) => {
-        // Bind the user to the session object
-        req.session.user = user;
-        res.redirect("/");
-      })
-      .catch((error) => {
-        if (error instanceof mongoose.Error.ValidationError) {
-          return res
-            .status(400)
-            .render("auth/signup", { errorMessage: error.message });
-        }
-        if (error.code === 11000) {
-          return res.status(400).render("auth/signup", {
-            errorMessage:
-              "Username need to be unique. The username you chose is already in use.",
-          });
-        }
-        return res
-          .status(500)
-          .render("auth/signup", { errorMessage: error.message });
-      });
-  });
-});
+    const salt = await bcrypt.genSalt(12);
+    const hashPassword = await bcrypt.hash(password, salt);
 
-router.get("/login", isLoggedOut, (req, res) => {
-  res.render("auth/login");
-});
-
-router.post("/login", isLoggedOut, (req, res, next) => {
-  const { username, password } = req.body;
-
-  if (!username) {
-    return res.status(400).render("auth/login", {
-      errorMessage: "Please provide your username.",
+    const createUser = UserModel.create({
+      email,
+      password: hashPassword,
     });
+
+    res.redirect("/auth/login");
+  } catch (err) {
+    next(err);
+  }
+});
+
+// @desc    Login User
+// @route   GET /auth/login
+// @access  Public
+router.get("/login", (req, res, next) => {
+  res.render("auth/login.hbs", { noHeader: true });
+});
+
+// @desc    Login User
+// @route   POST /auth/login
+// @access  Public
+router.post("/login", async (req, res, next) => {
+  const { email, password } = req.body;
+
+  if (!email || !password) {
+    res.render("auth/login.hbs", {
+      errorMessage: "Introduce los datos de login",
+    });
+    return;
   }
 
-  // Here we use the same logic as above
-  // - either length based parameters or we check the strength of a password
-  if (password.length < 8) {
-    return res.status(400).render("auth/login", {
-      errorMessage: "Your password needs to be at least 8 characters long.",
-    });
-  }
-
-  // Search the database for a user with the username submitted in the form
-  User.findOne({ username })
-    .then((user) => {
-      // If the user isn't found, send the message that user provided wrong credentials
-      if (!user) {
-        return res.status(400).render("auth/login", {
-          errorMessage: "Wrong credentials.",
-        });
-      }
-
-      // If user is found based on the username, check if the in putted password matches the one saved in the database
-      bcrypt.compare(password, user.password).then((isSamePassword) => {
-        if (!isSamePassword) {
-          return res.status(400).render("auth/login", {
-            errorMessage: "Wrong credentials.",
-          });
-        }
-        req.session.user = user;
-        // req.session.user = user._id; // ! better and safer but in this case we saving the entire user object
-        return res.redirect("/");
+  try {
+    const findUser = await UserModel.findOne({ email: email });
+    if (!findUser) {
+      res.render("auth/login.hbs", {
+        errorMessage: "No existe el usuario introducido",
       });
-    })
-
-    .catch((err) => {
-      // in this case we are sending the error handling to the error handling middleware that is defined in the error handling file
-      // you can just as easily run the res.status that is commented out below
-      next(err);
-      // return res.status(500).render("login", { errorMessage: err.message });
-    });
-});
-
-router.get("/logout", isLoggedIn, (req, res) => {
-  req.session.destroy((err) => {
-    if (err) {
-      return res
-        .status(500)
-        .render("auth/logout", { errorMessage: err.message });
+      return;
     }
+    const checkPassword = await bcrypt.compare(password, findUser.password);
+    if (!checkPassword) {
+      res.render("auth/login.hbs", {
+        errorMessage: "La contraseña no es correcta.",
+      });
+      return;
+    }
+
+    req.session.user = findUser;
+    req.app.locals.userIsActive = true;
     res.redirect("/");
-  });
+  } catch (err) {
+    next(err);
+  }
+});
+
+router.get("/logout", async (req, res, next) => {
+  await req.session.destroy();
+  req.app.locals.userIsActive = false;
+  res.redirect("/auth/login");
 });
 
 module.exports = router;
