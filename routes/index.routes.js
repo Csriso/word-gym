@@ -11,4 +11,7 @@ router.use("/auth", AuthRoutes);
 const CollectionRoutes = require("./collection.routes");
 router.use("/collection", CollectionRoutes);
 
+const WordRoutes = require("./word.routes");
+router.use("/word", WordRoutes);
+
 module.exports = router;

@@ -8,12 +8,7 @@ const wordSetSchema = new mongoose.Schema(
       required: true,
     },
     image: String,
-    words: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Word",
-      },
-    ],
+    words: [String],
   },
   {
     timestamps: true,
