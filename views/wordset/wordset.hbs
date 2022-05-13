@@ -12,3 +12,11 @@
 <br>
 <button>Submit</button>
 </form>
+
+<form action="/collection/{{wordSet._id}}/uploadImage" method="POST" enctype="multipart/form-data">
+  <label for="image">Image:</label>
+  <input type="file" name="image">
+  <button>Upload</button>
+</form>
+
+<img src="{{wordSet.image}}">

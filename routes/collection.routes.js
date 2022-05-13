@@ -1,6 +1,6 @@
 const router = require("express").Router();
-const { render, redirect } = require("express/lib/response");
 const isLoggedIn = require("../middleware/isLoggedIn");
+const uploader = require("../middleware/uploader.js")
 const WordSetModel = require("../models/Wordset.model");
 
 router.get("/", async (req, res, next) => {
@@ -42,6 +42,25 @@ router.post("/create", isLoggedIn, (req, res, next) => {
         console.log(err);
       });
   });
+
+router.post("/:id/uploadImage", isLoggedIn, uploader.single("image"), async (req, res, next)=>{
+    const { id } = req.params
+    console.log("intentando subir imagen", req.file)
+    try{
+        const wordSet = await WordSetModel.findById(id)
+        if(String(wordSet.user) !== req.session.user._id){ //|| !wordSet.private
+        res.redirect("/collection")
+        }
+
+        await WordSetModel.findByIdAndUpdate(id, {
+            image: req.file.path
+        })
+        res.redirect(`/collection/${id}`)
+    }
+    catch(err){
+        next(err)
+    }
+})
   
 
 router.get("/:id", async (req, res, next) => {
