@@ -19,6 +19,7 @@ router.post("/signup", async (req, res, next) => {
     res.render("auth/signup.hbs", {
       errorMessage: "Fill out all the inputs",
       email: email,
+      noHeader: true,
     });
     return;
   }
@@ -26,6 +27,7 @@ router.post("/signup", async (req, res, next) => {
     res.render("auth/signup.hbs", {
       errorMessage: "Password has to be at least 8 characters long",
       email: email,
+      noHeader: true,
     });
     return;
   }
@@ -34,6 +36,7 @@ router.post("/signup", async (req, res, next) => {
     res.render("auth/signup.hbs", {
       errorMessage: "Passwords dosent match.",
       email: email,
+      noHeader: true,
     });
     return;
   }
@@ -44,6 +47,7 @@ router.post("/signup", async (req, res, next) => {
       errorMessage:
         "contraseña no valida, necesita 8 char, una letra y un numero",
       email: email,
+      noHeader: true,
     });
     return;
   }
@@ -53,6 +57,7 @@ router.post("/signup", async (req, res, next) => {
     if (foundUser) {
       res.render("auth/signup.hbs", {
         errorMessage: "Email already in use",
+        noHeader: true,
       });
       return;
     }
@@ -87,6 +92,7 @@ router.post("/login", async (req, res, next) => {
   if (!email || !password) {
     res.render("auth/login.hbs", {
       errorMessage: "Introduce los datos de login",
+      noHeader: true,
     });
     return;
   }
@@ -96,6 +102,7 @@ router.post("/login", async (req, res, next) => {
     if (!findUser) {
       res.render("auth/login.hbs", {
         errorMessage: "No existe el usuario introducido",
+        noHeader: true,
       });
       return;
     }
@@ -103,6 +110,7 @@ router.post("/login", async (req, res, next) => {
     if (!checkPassword) {
       res.render("auth/login.hbs", {
         errorMessage: "La contraseña no es correcta.",
+        noHeader: true,
       });
       return;
     }
