@@ -61,18 +61,18 @@ router.get("/:id", async (req, res, next) => {
 
   router.post("/:id", async (req, res, next) => {
     const { id } = req.params
-    const { name, words } = req.body
+    const { name, words, private } = req.body
     wordsArr = words.split(", ")
     try {
-      const wordSet = await WordSetModel.findById(id);
+      let wordSet = await WordSetModel.findById(id);
       if(String(wordSet.user) !== req.session.user._id){
         res.redirect("/collection")
         }
-        await WordSetModel.findByIdAndUpdate(id, {words: wordsArr})
-    
+      wordSet=await WordSetModel.findByIdAndUpdate(id, {words: wordsArr, private}, {new: true})
+      console.log("words: ", words, "wordsArr: ", wordsArr)
       console.log("wordset id", id, wordSet)
-      console.log(wordSet)
-      res.render("wordset/wordset.hbs", { wordSet });
+      const wordsStr = wordSet.words.join(", ")
+      res.render("wordset/wordset.hbs", { wordSet, wordsStr });
     } catch (err) {
       console.log(err);
     }
