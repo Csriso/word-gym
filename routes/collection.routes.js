@@ -25,4 +25,15 @@ router.get("/create", isLoggedIn, (req, res, next) => {
   res.render("wordset/create.hbs");
 });
 
+router.post("/create", isLoggedIn, (req, res, next) => {
+  console.log(req.body);
+  WordSetModel.create(req.body)
+    .then((response) => {
+      res.redirect("/collection/my");
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
+
 module.exports = router;
