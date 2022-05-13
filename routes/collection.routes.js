@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const { render } = require("express/lib/response");
+const { render, redirect } = require("express/lib/response");
 const isLoggedIn = require("../middleware/isLoggedIn");
 const WordSetModel = require("../models/Wordset.model");
 
@@ -42,7 +42,26 @@ router.post("/create", isLoggedIn, (req, res, next) => {
 router.get("/:id", async (req, res, next) => {
     const { id } = req.params
     try {
-      const wordSet = await WordSetModel.findById(id).populate('user');
+      const wordSet = await WordSetModel.findById(id)
+      if(String(wordSet.user) !== req.session.user._id){ //|| !wordSet.private
+        res.redirect("/collection")
+      }
+      //console.log("wordset id", id, wordSet)
+      //console.log(wordSet)
+      res.render("wordset/wordset.hbs", { wordSet });
+    } catch (err) {
+      console.log(err);
+    }
+  });
+
+  router.post("/:id", async (req, res, next) => {
+    const { id } = req.params
+    const { name, words } = req.body
+    try {
+      const wordSet = await WordSetModel.findById(id);
+      if(String(wordSet.user) !== req.session.user._id){
+        res.redirect("/collection")
+        }
       console.log("wordset id", id, wordSet)
       console.log(wordSet)
       res.render("wordset/wordset.hbs", { wordSet });
