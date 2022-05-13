@@ -4,7 +4,7 @@ const WordSetModel = require("../models/Wordset.model")
 
 router.get("/", async (req, res, next)=>{
     try{
-         const wordSets = await WordSetModel.find().populate("words")
+         const wordSets = await WordSetModel.find()
          res.render("wordset/allsets.hbs", {wordSets})
     }catch(err){
         console.log(err)

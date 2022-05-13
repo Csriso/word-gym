@@ -8,4 +8,7 @@ router.get("/", (req, res, next) => {
 const AuthRoutes = require("./auth.routes");
 router.use("/auth", AuthRoutes);
 
+const CollectionRoutes = require("./collection.routes");
+router.use("/collection", CollectionRoutes);
+
 module.exports = router;
