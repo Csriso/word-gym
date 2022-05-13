@@ -51,9 +51,11 @@ router.get("/:id", async (req, res, next) => {
         res.redirect("/collection")
       }
       const wordsStr=wordSet.words.join(", ")
+      let checked=""
+        if(wordSet.private) checked="checked"
       //console.log("wordset id", id, wordSet)
       //console.log(wordSet)
-      res.render("wordset/wordset.hbs", { wordSet, wordsStr  });
+      res.render("wordset/wordset.hbs", { wordSet, wordsStr, private: checked  });
     } catch (err) {
       console.log(err);
     }
@@ -61,18 +63,32 @@ router.get("/:id", async (req, res, next) => {
 
   router.post("/:id", async (req, res, next) => {
     const { id } = req.params
-    const { name, words, private } = req.body
+    const { name, words } = req.body
+    let private=false;
+    if (req.body.private) private=true
     wordsArr = words.split(", ")
     try {
       let wordSet = await WordSetModel.findById(id);
       if(String(wordSet.user) !== req.session.user._id){
         res.redirect("/collection")
         }
-      wordSet=await WordSetModel.findByIdAndUpdate(id, {words: wordsArr, private}, {new: true})
+      wordSet=await WordSetModel.findByIdAndUpdate(id, {
+          words: wordsArr, 
+          private,
+          name
+        
+        }, {new: true})
+        let checked=""
+        if(wordSet.private) checked="checked"
+    
       console.log("words: ", words, "wordsArr: ", wordsArr)
       console.log("wordset id", id, wordSet)
       const wordsStr = wordSet.words.join(", ")
-      res.render("wordset/wordset.hbs", { wordSet, wordsStr });
+      res.render("wordset/wordset.hbs", { 
+          wordSet, 
+          wordsStr, 
+          private: checked
+        });
     } catch (err) {
       console.log(err);
     }
