@@ -13,6 +13,12 @@ const express = require("express");
 // https://www.npmjs.com/package/hbs
 const hbs = require("hbs");
 
+hbs.registerHelper("dateFormat", function (date) {
+  const arrDate = date.toString().split(" ");
+  let returnStr = `${arrDate[2]} ${arrDate[1]} ${arrDate[3]}`;
+  return returnStr;
+});
+
 const app = express();
 
 // ℹ️ This function is getting exported from the config folder. It runs most pieces of middleware
