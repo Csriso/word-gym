@@ -50,7 +50,7 @@ router.post(
   uploader.single("image"),
   async (req, res, next) => {
     const { id } = req.params;
-    if(!req.file) res.redirect(`/collection/${id}`);
+    
     //console.log("intentando subir imagen", req.file);
     try {
       const wordSet = await WordSetModel.findById(id);
@@ -65,6 +65,8 @@ router.post(
 
       res.redirect(`/collection/${id}`);
     } catch (err) {
+      if(!req.file) res.redirect(`/collection/${id}`);
+      
       next(err);
     }
   }
