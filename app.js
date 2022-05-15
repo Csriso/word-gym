@@ -19,6 +19,10 @@ hbs.registerHelper("dateFormat", function (date) {
   return returnStr;
 });
 
+hbs.registerHelper("capitalize", function (str) {
+  return str[0].toUpperCase() + str.slice(1);
+});
+
 const app = express();
 
 // ℹ️ This function is getting exported from the config folder. It runs most pieces of middleware

@@ -24,6 +24,26 @@ router.post("/", (req, res, next) => {
     });
 });
 
+router.get("/findWord/:word", (req, res, next) => {
+  const { word } = req.params;
+  getWordFromApi(word)
+    .then((response) => {
+      if (response.code) {
+        if (response.response.status === 404) {
+          res.render("word/findWord.hbs", {
+            findError: "Word not found",
+          });
+        }
+      } else {
+        response.word = capitalized(response.word);
+        res.json(response);
+      }
+    })
+    .catch((err) => {
+      console.log("ENTRO EN EL ERROR", err);
+    });
+});
+
 router.get("/", (req, res, next) => {
   res.render("word/findWord.hbs");
 });
