@@ -1,6 +1,19 @@
 <li>{{wordSet.name}}</li>
 <li>{{wordSet.image}}</li>
 <br>
-{{#each wordSet.words}}
-    <li>{{this}}</li>
-{{/each}}
+
+
+<section class="splide" aria-label="Splide Basic HTML Example">
+  <div class="splide__track">
+		<ul class="splide__list">
+            {{#each wordSet.words}}
+                <li class="splide__slide">{{this}}</li>
+            {{/each}}
+		</ul>
+  </div>
+</section>
+<script src="/js/splide/splide.min.js"></script>
+<script>
+    var splide = new Splide( '.splide' );
+    splide.mount();
+</script>
