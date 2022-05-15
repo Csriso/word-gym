@@ -50,8 +50,8 @@ router.post(
   uploader.single("image"),
   async (req, res, next) => {
     const { id } = req.params;
-    
-    //console.log("intentando subir imagen", req.file);
+
+    // console.log("intentando subir imagen", req.file);
     try {
       const wordSet = await WordSetModel.findById(id);
       if (String(wordSet.user) !== req.session.user._id) {
@@ -65,8 +65,18 @@ router.post(
 
       res.redirect(`/collection/${id}`);
     } catch (err) {
-      if(!req.file) res.redirect(`/collection/${id}`);
-      
+      if (!req.file) res.redirect(`/collection/${id}`);
+      // if (err.message.indexOf("format") !== -1) {
+      //   console.log("entro");
+      //   res.render("wordset/wordset.hbs", {
+      //     wordSet,
+      //     wordsStr,
+      //     private: checked,
+      //     err: err.message,
+      //   });
+      //   res.redirect(`/collection/${id}`);
+      //   return;
+      // }
       next(err);
     }
   }

@@ -9,6 +9,13 @@ module.exports = (app) => {
     // always logs the error
     console.error("ERROR: ", req.method, req.path, err);
 
+    //THIS WORKS.
+    // if (req.path.indexOf("uploadImage") !== -1) {
+    //   const arr = req.path.split("/");
+
+    //   res.redirect(`/collection/${arr[2]}`);
+    // }
+
     // only render if the error ocurred before sending the response
     if (!res.headersSent) {
       res.status(500).res.render("error");
