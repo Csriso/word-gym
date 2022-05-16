@@ -92,7 +92,11 @@ router.get("/:id/train", isLoggedIn, async (req, res, next) => {
       res.redirect("/collection");
     }
     console.log({ wordSet });
-    res.render("wordset/train.hbs", { wordSet });
+    res.render("wordset/train.hbs", {
+      wordSet,
+      noHeader: true,
+      fullSize: true,
+    });
   } catch (err) {
     console.log(err);
   }

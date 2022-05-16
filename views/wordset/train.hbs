@@ -1,12 +1,8 @@
-<li>{{wordSet.name}}</li>
-<li>{{wordSet.image}}</li>
-<br>
-
-<section class="splide" aria-label="Splide Basic HTML Example">
+<section class="splide absolute w-full m-0" aria-label="Splide Basic HTML Example">
   <div class="splide__track">
 		<ul class="splide__list">
             {{#each wordSet.words}}
-                <li class="splide__slide">{{this}}
+                <li class="splide__slide w-full">
                     {{> word this}}       
                 </li>
             {{/each}}
