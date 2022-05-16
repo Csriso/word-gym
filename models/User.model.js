@@ -7,6 +7,13 @@ const userSchema = new Schema(
       unique: true,
     },
     password: String,
+    trainedWordSets: [{
+      completedTimes: Number,    
+      WordSet: {
+        type: Schema.Types.ObjectId,
+        ref: "WordSet",
+      }
+    }],
   },
   {
     timestamps: true,
