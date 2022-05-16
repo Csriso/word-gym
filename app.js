@@ -13,6 +13,8 @@ const express = require("express");
 // https://www.npmjs.com/package/hbs
 const hbs = require("hbs");
 
+hbs.registerPartials(__dirname + "/views/partials");
+
 hbs.registerHelper("dateFormat", function (date) {
   const arrDate = date.toString().split(" ");
   let returnStr = `${arrDate[2]} ${arrDate[1]} ${arrDate[3]}`;
