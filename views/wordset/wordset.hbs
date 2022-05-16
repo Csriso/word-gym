@@ -1,9 +1,15 @@
 <section
   class="max-w-8xl p-6 mx-auto rounded-md shadow-md dark:bg-gray-800 bg-gray-300 my-8"
 >
-  <h2
-    class="text-lg font-semibold text-gray-700 capitalize dark:text-white"
-  >Edit collection</h2>
+  <div class="flex flex-row justify-between align-center items-center">
+    <h2
+      class="text-lg font-semibold text-gray-700 capitalize dark:text-white align-middle"
+    >Edit collection</h2>
+    <a
+      href="/collection/{{wordSet._id}}/delete"
+      class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
+    >Delete collection</a>
+  </div>
 
   <form method="POST" action="/collection/{{wordSet._id}}">
     <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-1">

@@ -37,9 +37,15 @@
 
         <div class="p-6">
           <div>
-            <span
-              class="text-xs font-medium text-blue-600 uppercase dark:text-blue-400"
-            >Collection</span>
+            {{#if private}}
+              <span
+                class="text-xs font-medium text-blue-600 uppercase dark:text-blue-600"
+              >Private collection</span>
+            {{else}}
+              <span
+                class="text-xs font-medium text-blue-600 uppercase dark:text-blue-400"
+              >Public collection</span>
+            {{/if}}
             <a
               href="/collection/{{this.id}}"
               class="block mt-2 text-2xl font-semibold text-gray-800 transition-colors duration-200 transform dark:text-gray-800 hover:text-gray-600 hover:underline"
