@@ -6,10 +6,10 @@
     class="flex flex-col justify-center content-center justify-items-center items-center"
   >
     {{#if this.word}}
-      <h4>{{this.word}}</h4>
+      <h4>{{capitalize this.word}}</h4>
       <audio controls src="{{this.audio}}"></audio>
     {{else}}
-      <h4 class="wordToQuery">{{this}}</h4>
+      <h4 class="wordToQuery">{{capitalize this}}</h4>
       <audio id="audio-{{this}}" controls src=""></audio>
     {{/if}}
 
