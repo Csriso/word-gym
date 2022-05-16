@@ -5,10 +5,16 @@
     <h2
       class="text-lg font-semibold text-gray-700 capitalize dark:text-white align-middle"
     >Edit collection</h2>
-    <a
-      href="/collection/{{wordSet._id}}/delete"
-      class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
-    >Delete collection</a>
+    <div class="flex flex-row justify-between align-center items-center">
+      <button
+        id="editToggleBtn"
+        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+      >Edit collection</button>
+      <a
+        href="/collection/{{wordSet._id}}/delete"
+        class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
+      >Delete collection</a>
+    </div>
   </div>
 
   <form method="POST" action="/collection/{{wordSet._id}}">
@@ -16,6 +22,7 @@
       <div>
         <label class="text-gray-700 dark:text-gray-200" for="name">Name</label>
         <input
+          disabled
           id="nameCollection"
           type="text"
           name="name"
@@ -30,6 +37,7 @@
           class="inline-flex relative items-center cursor-pointer"
         >
           <input
+            disabled
             type="checkbox"
             value="private"
             id="privateToggle"
@@ -52,6 +60,7 @@
           for="words"
         >Words</label>
         <input
+          disabled
           id="words"
           type="text"
           name="words"
@@ -63,6 +72,9 @@
 
     <div class="flex justify-end mt-6">
       <button
+        disabled
+        style="display: none"
+        id="submitColBtn"
         class="px-6 py-2 leading-5 text-white transition-colors duration-200 transform bg-gray-700 rounded-md hover:bg-gray-600 focus:outline-none focus:bg-gray-600"
       >Save</button>
     </div>
@@ -108,6 +120,8 @@
 
   </div>
   <form
+    id="formImage"
+    style="display:none"
     action="/collection/{{wordSet._id}}/uploadImage"
     method="POST"
     enctype="multipart/form-data"
@@ -150,3 +164,24 @@
   </form>
 
 </section>
+
+<script>
+  let editState = { active : false}; function activateEdit() {
+  console.log("EVENT"); let arrToggle = ["nameCollection","privateToggle",
+  "words", "submitColBtn"]; if(editState.active === false){
+  document.getElementById("editToggleBtn").innerText = "Finish editing";
+  editState.active = true; }else{
+  document.getElementById("editToggleBtn").innerText = "Edit collection";
+  editState.active = false; } arrToggle.forEach((elem) => {
+  document.getElementById(elem).disabled ?
+  document.getElementById(elem).disabled = false :
+  document.getElementById(elem).disabled = true })
+  if(document.getElementById("formImage").style.display === "none"){
+  document.getElementById("formImage").style.display = ""; }else{
+  document.getElementById("formImage").style.display = "none" }
+  if(document.getElementById("submitColBtn").style.display === "none"){
+  document.getElementById("submitColBtn").style.display = ""; }else{
+  document.getElementById("submitColBtn").style.display = "none" } } const
+  editToggleBtnSel = document.getElementById("editToggleBtn");
+  editToggleBtnSel.addEventListener("click", activateEdit);
+</script>
