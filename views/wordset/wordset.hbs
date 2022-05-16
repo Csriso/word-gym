@@ -1,22 +1,115 @@
-<form method="POST" action="/collection/{{wordSet._id}}">
-<label for="name">Name:</label>
-<br>
-<input type="text" name="name" value="{{wordSet.name}}">
-<br>
-<label for="private">Private</label>
-<input type="checkbox" name="private" value="private" {{private}}>
-<br>
-<label for="words">Words:</label>
-<br>
-<input type="text" name="words" value="{{wordsStr}}">
-<br>
-<button>Submit</button>
-</form>
+<section
+  class="max-w-8xl p-6 mx-auto rounded-md shadow-md dark:bg-gray-800 bg-gray-300 my-8"
+>
+  <h2
+    class="text-lg font-semibold text-gray-700 capitalize dark:text-white"
+  >Edit collection</h2>
 
-<form action="/collection/{{wordSet._id}}/uploadImage" method="POST" enctype="multipart/form-data">
-  <label for="image">Image:</label>
-  <input type="file" name="image">
-  <button>Upload</button>
-</form>
+  <form method="POST" action="/collection/{{wordSet._id}}">
+    <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-1">
+      <div>
+        <label class="text-gray-700 dark:text-gray-200" for="name">Name</label>
+        <input
+          id="nameCollection"
+          type="text"
+          name="name"
+          value="{{wordSet.name}}"
+          class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+        />
+      </div>
 
-<img src="{{wordSet.image}}">
+      <div>
+        <label
+          for="privateToggle"
+          class="inline-flex relative items-center cursor-pointer"
+        >
+          <input
+            type="checkbox"
+            value="private"
+            id="privateToggle"
+            class="sr-only peer"
+            name="private"
+            {{private}}
+          />
+          <div
+            class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"
+          ></div>
+          <span
+            class="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300"
+          >Private</span>
+        </label>
+      </div>
+
+      <div>
+        <label
+          class="text-gray-700 dark:text-gray-200"
+          for="words"
+        >Words</label>
+        <input
+          id="words"
+          type="text"
+          name="words"
+          value="{{wordsStr}}"
+          class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+        />
+      </div>
+    </div>
+
+    <div class="flex justify-end mt-6">
+      <button
+        class="px-6 py-2 leading-5 text-white transition-colors duration-200 transform bg-gray-700 rounded-md hover:bg-gray-600 focus:outline-none focus:bg-gray-600"
+      >Save</button>
+    </div>
+  </form>
+  <div>
+    <h5 for="img" class="text-gray-700 dark:text-white">Current image:</h5>
+    {{#if wordSet.image}}
+      <img class="w-48" src="{{wordSet.image}}" />
+    {{else}}
+      <h5 for="img" class="text-gray-700 dark:text-white">No Image</h5>
+    {{/if}}
+
+  </div>
+  <form
+    action="/collection/{{wordSet._id}}/uploadImage"
+    method="POST"
+    enctype="multipart/form-data"
+  >
+    <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-1">
+      <div class="flex justify-center items-center w-full">
+        <label
+          for="dropzone-file"
+          class="flex flex-col justify-center items-center w-full h-64 bg-gray-50 rounded-lg border-2 border-gray-300 border-dashed cursor-pointer dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600"
+        >
+          <div class="flex flex-col justify-center items-center pt-5 pb-6">
+            <svg
+              class="mb-3 w-10 h-10 text-gray-400"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            ><path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
+              ></path></svg>
+            <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span
+                class="font-semibold"
+              >Click to upload</span>
+              or drag and drop</p>
+            <p class="text-xs text-gray-500 dark:text-gray-400">PNG or JPG </p>
+          </div>
+          <input id="dropzone-file" type="file" class="hidden" name="image" />
+        </label>
+      </div>
+      <div class="flex justify-end items-center w-full">
+
+        <button
+          class="justify-end focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
+        >Upload</button>
+      </div>
+    </div>
+  </form>
+
+</section>
