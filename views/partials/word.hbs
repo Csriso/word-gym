@@ -5,8 +5,14 @@
   <div
     class="flex flex-col justify-center content-center justify-items-center items-center"
   >
-    <h4>{{word.word}}</h4>
-    <audio controls src="{{word.audio}}"></audio>
+  {{#if this.word}}
+    <h4>{{this.word}}</h4>
+    <audio controls src="{{this.audio}}"></audio>
+  {{else}}
+    <h4>{{this}}</h4>
+    <audio controls src="{{this}}"></audio>
+  {{/if}}
+    
   </div>
 
 

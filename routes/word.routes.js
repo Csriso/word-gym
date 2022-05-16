@@ -14,9 +14,10 @@ router.post("/", (req, res, next) => {
         }
       } else {
         response.word = capitalized(response.word);
-        res.render("word/word.hbs", {
-          word: response,
-        });
+        console.log({word: response})
+        res.render("word/word.hbs", 
+          response
+        );
       }
     })
     .catch((err) => {

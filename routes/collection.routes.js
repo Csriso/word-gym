@@ -91,6 +91,7 @@ router.get("/:id/train", isLoggedIn, async (req, res, next) => {
       //|| !wordSet.private
       res.redirect("/collection");
     }
+    console.log({wordSet})
     res.render("wordset/train.hbs", { wordSet });
   } catch (err) {
     console.log(err);
