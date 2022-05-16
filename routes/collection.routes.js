@@ -51,7 +51,7 @@ router.post(
   async (req, res, next) => {
     const { id } = req.params;
 
-    // console.log("intentando subir imagen", req.file);
+    console.log("intentando subir imagen", req.file);
     try {
       const wordSet = await WordSetModel.findById(id);
       if (String(wordSet.user) !== req.session.user._id) {
@@ -91,7 +91,7 @@ router.get("/:id/train", isLoggedIn, async (req, res, next) => {
       //|| !wordSet.private
       res.redirect("/collection");
     }
-    console.log({wordSet})
+    console.log({ wordSet });
     res.render("wordset/train.hbs", { wordSet });
   } catch (err) {
     console.log(err);
@@ -100,18 +100,25 @@ router.get("/:id/train", isLoggedIn, async (req, res, next) => {
 
 router.get("/:id", async (req, res, next) => {
   const { id } = req.params;
+  const { errormsg } = req.query;
   try {
     const wordSet = await WordSetModel.findById(id);
     if (String(wordSet.user) !== req.session.user._id) {
       //|| !wordSet.private
       res.redirect("/collection");
     }
+
     const wordsStr = wordSet.words.join(", ");
     let checked = "";
     if (wordSet.private) checked = "checked";
     //console.log("wordset id", id, wordSet)
     //console.log(wordSet)
-    res.render("wordset/wordset.hbs", { wordSet, wordsStr, private: checked });
+    res.render("wordset/wordset.hbs", {
+      wordSet,
+      wordsStr,
+      private: checked,
+      errormsg,
+    });
   } catch (err) {
     console.log(err);
   }

@@ -10,11 +10,15 @@ module.exports = (app) => {
     console.error("ERROR: ", req.method, req.path, err);
 
     //THIS WORKS.
-    // if (req.path.indexOf("uploadImage") !== -1) {
-    //   const arr = req.path.split("/");
+    if (
+      req.path.indexOf("uploadImage") !== -1 &&
+      err.message === "Image file format gif not allowed"
+    ) {
+      const arr = req.path.split("/");
 
-    //   res.redirect(`/collection/${arr[2]}`);
-    // }
+      // res.redirect(`/collection/${arr[2]}`);
+      res.redirect(`/collection/${arr[2]}?errormsg=${err.message}`);
+    }
 
     // only render if the error ocurred before sending the response
     if (!res.headersSent) {

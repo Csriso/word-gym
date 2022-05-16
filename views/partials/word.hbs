@@ -10,12 +10,13 @@
       <audio controls src="{{this.audio}}"></audio>
     {{else}}
       <h4 class="wordToQuery">{{this}}</h4>
-      <audio id="audio-{{this}}" controls src="{{this}}"></audio>
+      <audio id="audio-{{this}}" controls src=""></audio>
     {{/if}}
 
   </div>
-
-  <div class="wrapper">
+  {{#if this.word}}{{else}}
+  {{/if}}
+  <div class="wrapper audioPlayer">
 
     <header>
       <h1>Web dictaphone</h1>
