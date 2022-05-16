@@ -8,10 +8,12 @@ const userSchema = new Schema(
     },
     password: String,
     trainedWordSets: [{
-      completedTimes: Number,    
+      completedTimes: {
+        type: Number,
+        default: 0,
+      },
       WordSet: {
         type: Schema.Types.ObjectId,
-        unique: true,
         ref: "WordSet",
       }
     }],
