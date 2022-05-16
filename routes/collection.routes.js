@@ -26,6 +26,21 @@ router.get("/mycollection", isLoggedIn, async (req, res, next) => {
   }
 });
 
+router.get("/:id/delete", isLoggedIn, async (req, res, next) => {
+  const { id } = req.params;
+  try {
+    const user = req.session.user;
+    const wordSet = await WordSetModel.find({ user: user, _id: id });
+
+    if (String(wordSet[0].user) === req.session.user._id) {
+      await WordSetModel.findByIdAndDelete(id);
+    }
+    res.redirect("/collection/mycollection");
+  } catch (err) {
+    console.log(err);
+  }
+});
+
 router.get("/create", isLoggedIn, (req, res, next) => {
   res.render("wordset/create.hbs");
 });
@@ -103,29 +118,28 @@ router.get("/:id/train", isLoggedIn, async (req, res, next) => {
   }
 });
 
-router.get("/:id/train/test", isLoggedIn, async(req, res, next)=>{
+router.get("/:id/train/test", isLoggedIn, async (req, res, next) => {
   const { id } = req.params;
-  const { completed } = req.body
-  try{
+  const { completed } = req.body;
+  try {
     const wordSet = await WordSetModel.findById(id);
-    const userTest = await UserModel.findById(req.session.user._id)
-    console.log("user test: ",userTest)
+    const userTest = await UserModel.findById(req.session.user._id);
+    console.log("user test: ", userTest);
     if (String(wordSet.user) !== req.session.user._id) {
       //|| !wordSet.private
       res.redirect("/collection");
     }
     //const user = await UserModel.findById(req.session.user._id)
     //const user = await UserModel.findByIdAndUpdate(req.session.user_id, {$inc : {'completedTimes': 1}}.exec)
-    const user = await UserModel.findByIdAndUpdate(req.session.user._id, {trainedWordSets: {'WordSet': id}})
-    console.log("TRAIN TEST", user)
-    res.redirect("/collection")
+    const user = await UserModel.findByIdAndUpdate(req.session.user._id, {
+      trainedWordSets: { WordSet: id },
+    });
+    console.log("TRAIN TEST", user);
+    res.redirect("/collection");
+  } catch (err) {
+    console.log(err);
   }
-  catch(err){
-    console.log(err)
-  }
-
-
-})
+});
 
 router.get("/:id", async (req, res, next) => {
   const { id } = req.params;
