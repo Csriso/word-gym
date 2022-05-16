@@ -5,37 +5,35 @@
   <div
     class="flex flex-col justify-center content-center justify-items-center items-center"
   >
-  {{#if this.word}}
-    <h4>{{this.word}}</h4>
-    <audio controls src="{{this.audio}}"></audio>
-  {{else}}
-    <h4>{{this}}</h4>
-    <audio controls src="{{this}}"></audio>
-  {{/if}}
-    
+    {{#if this.word}}
+      <h4>{{this.word}}</h4>
+      <audio controls src="{{this.audio}}"></audio>
+    {{else}}
+      <h4 class="wordToQuery">{{this}}</h4>
+      <audio id="audio-{{this}}" controls src="{{this}}"></audio>
+    {{/if}}
+
   </div>
 
+  <div class="wrapper">
 
-<div class="wrapper">
+    <header>
+      <h1>Web dictaphone</h1>
+    </header>
 
-      <header>
-        <h1>Web dictaphone</h1>
-      </header>
+    <section class="main-controls">
+      <canvas class="visualizer" height="60px"></canvas>
+      <div id="buttons">
+        <button class="record">Record</button>
+        <button class="stop">Stop</button>
+      </div>
+    </section>
 
-      <section class="main-controls">
-        <canvas class="visualizer" height="60px"></canvas>
-        <div id="buttons">
-          <button class="record">Record</button>
-          <button class="stop">Stop</button>
-        </div>
-      </section>
+    <section class="sound-clips">
 
-      <section class="sound-clips">
+    </section>
 
-
-      </section>
-
-    </div>
+  </div>
 
   <script src="/js/audioRecorder.js"></script>
 
