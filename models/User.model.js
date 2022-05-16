@@ -11,6 +11,7 @@ const userSchema = new Schema(
       completedTimes: Number,    
       WordSet: {
         type: Schema.Types.ObjectId,
+        unique: true,
         ref: "WordSet",
       }
     }],
