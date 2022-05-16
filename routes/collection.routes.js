@@ -3,6 +3,7 @@ const isLoggedIn = require("../middleware/isLoggedIn");
 const uploader = require("../middleware/uploader.js");
 const WordSetModel = require("../models/Wordset.model");
 const UserModel = require("../models/User.model");
+const WordSet = require("../models/Wordset.model");
 
 router.get("/", async (req, res, next) => {
   try {
@@ -124,17 +125,31 @@ router.get("/:id/train/test", isLoggedIn, async (req, res, next) => {
   try {
     const wordSet = await WordSetModel.findById(id);
     const userTest = await UserModel.findById(req.session.user._id);
-    console.log("user test: ", userTest);
+    //console.log("user test: ", userTest);
     if (String(wordSet.user) !== req.session.user._id) {
       //|| !wordSet.private
       res.redirect("/collection");
     }
     //const user = await UserModel.findById(req.session.user._id)
     //const user = await UserModel.findByIdAndUpdate(req.session.user_id, {$inc : {'completedTimes': 1}}.exec)
+   /*
     const user = await UserModel.findByIdAndUpdate(req.session.user._id, {
       trainedWordSets: { WordSet: id },
     });
-    console.log("TRAIN TEST", user);
+    */
+console.log("hey!")
+    const test2 = await UserModel.findOneAndUpdate(
+      {
+       '_id' :  req.session.user._id,
+       'trainedWordSets.WordSet': id
+      },
+      {$inc: {
+        'trainedWordSets.$.completedTimes': 1 
+      }},
+      //{upsert: true},
+      )
+
+    console.log("TRAIN TEST", test2);
     res.redirect("/collection");
   } catch (err) {
     console.log(err);
