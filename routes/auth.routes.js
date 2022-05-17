@@ -9,6 +9,17 @@ const isLoggedIn = require("../middleware/isLoggedIn");
 router.get("/profile", isLoggedIn, (req, res, next) => {
   res.render("profile.hbs", { user: req.session.user });
 });
+
+router.post("/profile", isLoggedIn, async (req, res, next) => {
+  const { username, name, lastName } = req.params;
+
+  try {
+    const updateUser = await UserModel.findByIdAndUpdate(id, req.params);
+    res.redirect("/auth/profile");
+  } catch (err) {
+    console.log(err);
+  }
+});
 // @desc    Signup User
 // @route   GET /auth/signup
 // @access  Public
