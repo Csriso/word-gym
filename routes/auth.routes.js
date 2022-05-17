@@ -272,7 +272,7 @@ router.post("/forgetPassword", async (req, res, next) => {
   const { email } = req.body;
   console.log(email);
   try {
-    const findEmail = await UserModel.findById(id);
+    const findEmail = await UserModel.find({ email: email });
     console.log(findEmail);
     if (findEmail) {
       let activationLink = "http://localhost:3000/auth/";
