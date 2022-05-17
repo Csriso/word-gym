@@ -23,6 +23,10 @@ const userSchema = new Schema(
     name: String,
     lastName: String,
     avatar: String,
+    active: {
+      type: Boolean,
+      default: false,
+    },
   },
   {
     timestamps: true,
