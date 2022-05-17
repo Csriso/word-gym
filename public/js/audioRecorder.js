@@ -33,7 +33,8 @@ if (navigator.mediaDevices.getUserMedia) {
       console.log(mediaRecorder.state);
       console.log("recorder started");
       record.style.background = "red";
-
+      record.style.opacity = 0;
+      stop.style.opacity = 1;
       stop.disabled = false;
       record.disabled = true;
     };
@@ -45,7 +46,8 @@ if (navigator.mediaDevices.getUserMedia) {
       record.style.background = "";
       record.style.color = "";
       // mediaRecorder.requestData();
-
+      record.style.opacity = 1;
+      stop.style.opacity = 0;
       stop.disabled = true;
       record.disabled = false;
     };

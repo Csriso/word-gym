@@ -4,7 +4,7 @@ const capitalized = require("../utils/capitalized");
 
 router.post("/", (req, res, next) => {
   const { word } = req.body;
-  getWordFromApi(word)
+  getWordFromApi(word, true)
     .then((response) => {
       if (response.code) {
         if (response.response.status === 404) {

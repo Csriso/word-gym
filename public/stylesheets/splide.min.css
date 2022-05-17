@@ -142,7 +142,7 @@
   height: 2em;
   -ms-flex-pack: center;
   justify-content: center;
-  opacity: 0.7;
+  opacity: 1;
   padding: 0;
   position: absolute;
   top: 50%;
@@ -159,7 +159,7 @@
   opacity: 0.9;
 }
 .splide__arrow:disabled {
-  opacity: 0.3;
+  opacity: 0.6;
 }
 .splide__arrow:focus-visible {
   outline: 3px solid #0bf;

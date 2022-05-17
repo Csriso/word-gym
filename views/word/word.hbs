@@ -1,2 +1,28 @@
 {{> word this}}
 {{> recorder }}
+<section
+  class="max-w-7xl p-6 mx-auto bg-gray-800 rounded-md shadow-md dark:bg-gray-800 mt-6 text-white"
+>
+    <h3 class="dark:text-white text-black mb-5">{{this.word}} definitions</h3>
+    {{#if this.definitions}}
+        <div class="definitions">
+            <ul>
+            {{#each this.definitions}}
+                <li class="mb-3">{{this.definition}}</li>
+                {{#if this.definition.synonyms}}
+                <h5>Synonyms:</h5>
+                    {{#each this.definition.synonyms}}
+                        <p>{{this}}</p>
+                    {{/each}}
+                {{/if}}
+                {{#if this.antonyms.synonyms}}
+                <h5>Antonyms:</h5>
+                    {{#each this.antonyms.synonyms}}
+                        <p>{{this}}</p>
+                    {{/each}}
+                {{/if}}
+            {{/each}}
+            </ul>
+        </div> 
+    {{/if}}
+</section>

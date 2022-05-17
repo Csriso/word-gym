@@ -28,8 +28,11 @@
     </script>
     {{/unless}}
   </head>
-
+  {{#unless fullSize}}
   <body class="bg-white dark:bg-neutral-900">
+  {{else}}
+  <body class="bg-gray-800 dark:bg-gray-800">
+  {{/unless}}
     {{#unless noHeader}}
       <!-- Require css -->
       <style>
