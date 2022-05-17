@@ -1,27 +1,55 @@
-<a href="/collection" class="mt-1 ml-1 z-20 absolute top-0 left-0 focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">EXIT</a>
+<a
+  href="/collection"
+  class="mt-1 ml-1 z-20 absolute top-0 left-0 focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
+>EXIT</a>
 <section class="splide w-full m-0" aria-label="Splide Basic HTML Example">
   <div class="splide__track">
     <ul class="splide__list">
-        {{#each wordSet.words}}
+      {{#each wordSet.words}}
         <li class="splide__slide w-full">
-            {{> word this}}
+          <section
+            class="mx-auto bg-white rounded-md shadow-md dark:bg-gray-800 text-white w-full m-0 h-full w-full"
+          >
+
+            <div
+              class="flex flex-col justify-center content-center justify-items-center items-center w-full pt-72"
+            >
+              {{#if this.word}}
+                <h4>{{capitalize this.word}}</h4>
+                <audio controls src="{{this.audio}}"></audio>
+              {{else}}
+                <h4 class="wordToQuery">{{capitalize this}}</h4>
+                <audio id="audio-{{this}}" controls src=""></audio>
+              {{/if}}
+
+            </div>
+            {{#if this.word}}{{else}}
+            {{/if}}
+
+          </section>
         </li>
-        {{/each}}
+      {{/each}}
     </ul>
-    <div class="flex flex-col justify-center content-center justify-items-center items-center absolute w-1/2 inset-0 h-3 m-auto  bg-gray-800 shadow dark:bg-gray-800 text-white h-2/6">
+    <div
+      class="flex flex-col justify-center content-center justify-items-center items-center absolute w-1/2 bottom-0 inset-x-0 h-3 m-auto text-white h-2/6"
+    >
       <div class="wrapper audioPlayer relative">
-          <header>
-              <h1>Web dictaphone</h1>
-          </header>
-          <section class="main-controls">
-              <canvas class="visualizer" height="60px"></canvas>
-              <div id="buttons" class="flex flex-row justify-center mt-5">
-                  <button class="record focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">Record</button>
-                  <button class="stop focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">Stop</button>
-              </div>
-          </section>
-          <section class="sound-clips">
-          </section>
+        <header>
+          <h1>Web dictaphone</h1>
+        </header>
+        <section class="main-controls">
+          <canvas class="visualizer" height="60px"></canvas>
+          <div id="buttons" class="flex flex-row justify-center mt-5">
+            <button
+              class="record focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
+            >Record</button>
+            <button
+              class="stop focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
+            >Stop</button>
+          </div>
+        </section>
+        <section class="sound-clips">
+        </section>
       </div>
     </div>
   </div>
@@ -31,6 +59,6 @@
 <script src="/js/splide/splide.min.js"></script>
 <script src="/js/queryWordInfo.js"></script>
 <script>
-    var splide = new Splide('.splide');
-    splide.mount();
+  var splide = new Splide('.splide'); splide.mount(); console.log(splide);
+  splide.Components.Slides.style("w-full h-full");
 </script>

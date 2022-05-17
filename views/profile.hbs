@@ -1,10 +1,11 @@
 <section
   class="max-w-8xl p-6 mx-auto rounded-md shadow-md dark:bg-gray-800 bg-gray-300 my-8"
 >
-  <div class="flex flex-row justify-between align-center items-center">
+  <div class="flex flex-row justify-between align-center">
     <h2
       class="text-lg font-semibold text-gray-700 capitalize dark:text-white align-middle"
     >Profile</h2>
+
   </div>
 
   <form method="POST" action="/auth/profile" enctype="multipart/form-data">
@@ -43,7 +44,14 @@
           class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
         />
       </div>
-
+      <div>
+        <h5 for="img" class="text-gray-700 dark:text-white mt-6">Current avatar:</h5>
+        {{#if user.avatar}}
+          <img class="w-32 rounded-full mt-4" src="{{user.avatar}}" />
+        {{else}}
+          <h5 for="img" class="text-gray-700 dark:text-white">No Avatar</h5>
+        {{/if}}
+      </div>
       <label
         class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
         for="large_size"
@@ -93,16 +101,5 @@
   {{/if}}
 
   {{! END ERROR MSG }}
-
-  <div>
-    <h5 for="img" class="text-gray-700 dark:text-white rounded-full">Current
-      avatar:</h5>
-    {{#if user.avatar}}
-      <img class="w-48 rounded-full mt-4" src="{{user.avatar}}" />
-    {{else}}
-      <h5 for="img" class="text-gray-700 dark:text-white">No Avatar</h5>
-    {{/if}}
-
-  </div>
 
 </section>

@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
     <link rel="stylesheet" href="/stylesheets/splide.min.css">
     <link rel="stylesheet" href="/stylesheets/style.css" />
+    {{#unless fullSize}}
     <script>
       if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in
       localStorage) &&
@@ -25,6 +26,7 @@
       tailwind.config = { darkMode: "class", content: ["./src/**/*.{html,js}"],
       theme: { extend: { colors: { clifford: '#da373d', } } } }
     </script>
+    {{/unless}}
   </head>
 
   <body class="bg-white dark:bg-neutral-900">
@@ -254,8 +256,9 @@
     </div>
     <script src="https://unpkg.com/flowbite@1.4.5/dist/flowbite.js"></script>
     <script src="/js/splide/splide.min.js"></script>
+  {{#unless fullSize}}
     <script src="/js/script.js"></script>
-
+    
     <script>
       function handleDropdown(){
         if (document.getElementById("dropdownMenu").style.display ==="none") {
@@ -263,10 +266,12 @@
         }  else{
           document.getElementById("dropdownMenu").style.display = "none";
         } 
-      }
+      }      
       const dropdownBtn = document.getElementById("dropdownBtn");
       dropdownBtn.addEventListener("click", handleDropdown);
     </script>
+      {{/unless}}
+    
   </body>
 
 </html>
