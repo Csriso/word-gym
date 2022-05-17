@@ -130,14 +130,7 @@ router.get("/:id/train/test", isLoggedIn, async (req, res, next) => {
       //|| !wordSet.private
       res.redirect("/collection");
     }
-    //const user = await UserModel.findById(req.session.user._id)
-    //const user = await UserModel.findByIdAndUpdate(req.session.user_id, {$inc : {'completedTimes': 1}}.exec)
-   /*
-    const user = await UserModel.findByIdAndUpdate(req.session.user._id, {
-      trainedWordSets: { WordSet: id },
-    });
-    */
-console.log("hey!")
+
     const test2 = await UserModel.findOneAndUpdate(
       {
        '_id' :  req.session.user._id,
@@ -148,8 +141,13 @@ console.log("hey!")
       }},
       //{upsert: true},
       )
-
-    console.log("TRAIN TEST", test2);
+      if(!test2) {
+        userTest.trainedWordSets.push({completedTimes: 1, WordSet: wordSet})
+        userTest.save(function(err, result){
+          if(err) console.log(err)
+          else console.log(result)
+        })
+      }
     res.redirect("/collection");
   } catch (err) {
     console.log(err);
