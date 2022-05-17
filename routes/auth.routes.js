@@ -3,6 +3,7 @@ const bcrypt = require("bcrypt");
 const UserModel = require("../models/User.model");
 const isLoggedIn = require("../middleware/isLoggedIn");
 const uploader = require("../middleware/uploader.js");
+const {nodemailer, transporter} = require("../utils/nodemailer")
 
 // @desc    Profile User
 // @route   GET /auth/profile
@@ -109,6 +110,21 @@ router.post("/signup", async (req, res, next) => {
 
     const salt = await bcrypt.genSalt(12);
     const hashPassword = await bcrypt.hash(password, salt);
+
+    mailOptions = {
+      from: 'augustus.daniel89@ethereal.email',
+      to: 'jferran@gmail',
+      subject: 'Sending Email using Node.js',
+      text: 'That was easy!'
+    };
+    
+    transporter.sendMail(mailOptions, function(error, info){
+      if (error) {
+        console.log(error);
+      } else {
+        console.log('Email sent: ' + info.response);
+      }
+    });
 
     const createUser = UserModel.create({
       email,
