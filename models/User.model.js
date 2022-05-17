@@ -22,6 +22,7 @@ const userSchema = new Schema(
     username: String,
     name: String,
     lastName: String,
+    avatar: String,
   },
   {
     timestamps: true,

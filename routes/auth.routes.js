@@ -1,7 +1,14 @@
 const router = require("express").Router();
 const bcrypt = require("bcrypt");
 const UserModel = require("../models/User.model");
+const isLoggedIn = require("../middleware/isLoggedIn");
 
+// @desc    Profile User
+// @route   GET /auth/profile
+// @access  Private
+router.get("/profile", isLoggedIn, (req, res, next) => {
+  res.render("profile.hbs", { user: req.session.user });
+});
 // @desc    Signup User
 // @route   GET /auth/signup
 // @access  Public

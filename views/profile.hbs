@@ -1,0 +1,116 @@
+<section
+  class="max-w-8xl p-6 mx-auto rounded-md shadow-md dark:bg-gray-800 bg-gray-300 my-8"
+>
+  <div class="flex flex-row justify-between align-center items-center">
+    <h2
+      class="text-lg font-semibold text-gray-700 capitalize dark:text-white align-middle"
+    >Profile</h2>
+  </div>
+
+  <form method="POST" action="/auth/{{user._id}}/edit">
+    <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-1">
+      <div>
+        <label
+          class="text-gray-700 dark:text-gray-200"
+          for="name"
+        >Username</label>
+        <input
+          id="nameCollection"
+          type="text"
+          name="name"
+          value="{{user.username}}"
+          class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+        />
+      </div>
+      <div>
+        <label class="text-gray-700 dark:text-gray-200" for="name">Name</label>
+        <input
+          id="nameCollection"
+          type="text"
+          name="name"
+          value="{{user.name}}"
+          class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+        />
+      </div>
+
+      <div>
+        <label class="text-gray-700 dark:text-gray-200" for="words">Last Name</label>
+        <input
+          id="words"
+          type="text"
+          name="words"
+          value="{{user.lastName}}"
+          class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
+        />
+      </div>
+    </div>
+
+    <div class="flex justify-end mt-6">
+      <button
+        id="submitColBtn"
+        class="px-6 py-2 leading-5 text-white transition-colors duration-200 transform bg-gray-700 rounded-md hover:bg-green-600 hover:text-black focus:outline-none focus:bg-gray-600"
+      >Save</button>
+    </div>
+  </form>
+
+  {{! ERROR MSG }}
+  {{#if errormsg}}
+    <div
+      class="flex w-full max-w-sm mx-auto overflow-hidden bg-white rounded-lg shadow-md dark:bg-gray-800"
+    >
+      <div class="flex items-center justify-center w-12 bg-red-500">
+        <svg
+          class="w-6 h-6 text-white fill-current"
+          viewBox="0 0 40 40"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M20 3.36667C10.8167 3.36667 3.3667 10.8167 3.3667 20C3.3667 29.1833 10.8167 36.6333 20 36.6333C29.1834 36.6333 36.6334 29.1833 36.6334 20C36.6334 10.8167 29.1834 3.36667 20 3.36667ZM19.1334 33.3333V22.9H13.3334L21.6667 6.66667V17.1H27.25L19.1334 33.3333Z"
+          ></path>
+        </svg>
+      </div>
+
+      <div class="px-4 py-2 -mx-3">
+        <div class="mx-3">
+          <span
+            class="font-semibold text-red-500 dark:text-red-400"
+          >Error</span>
+          <p class="text-sm text-gray-600 dark:text-gray-200">{{errormsg}}</p>
+        </div>
+      </div>
+    </div>
+  {{/if}}
+
+  {{! END ERROR MSG }}
+
+  <div>
+    <h5 for="img" class="text-gray-700 dark:text-white rounded-full">Current
+      avatar:</h5>
+    {{#if wordSet.image}}
+      <img class="w-48" src="{{wordSet.image}}" />
+    {{else}}
+      <h5 for="img" class="text-gray-700 dark:text-white">No Avatar</h5>
+    {{/if}}
+
+  </div>
+  <form
+    id="formImage"
+    style="display:none"
+    action="/auth/{{user._id}}/uploadAvatar"
+    method="POST"
+    enctype="multipart/form-data"
+    class="mt-10"
+  >
+    <label
+      class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+      for="large_size"
+    >Select avatar</label>
+    <input
+      name="image"
+      class="block w-full text-lg text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+      id="large_size"
+      type="file"
+    />
+  </form>
+
+</section>
