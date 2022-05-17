@@ -64,7 +64,7 @@ router.post("/create", isLoggedIn, (req, res, next) => {
 router.post(
   "/:id/uploadImage",
   isLoggedIn,
-  uploader.single("image"),
+  uploader.single("avatar"),
   async (req, res, next) => {
     const { id } = req.params;
 
@@ -133,21 +133,23 @@ router.get("/:id/train/test", isLoggedIn, async (req, res, next) => {
 
     const test2 = await UserModel.findOneAndUpdate(
       {
-       '_id' :  req.session.user._id,
-       'trainedWordSets.WordSet': id
+        _id: req.session.user._id,
+        "trainedWordSets.WordSet": id,
       },
-      {$inc: {
-        'trainedWordSets.$.completedTimes': 1 
-      }},
-      //{upsert: true},
-      )
-      if(!test2) {
-        userTest.trainedWordSets.push({completedTimes: 1, WordSet: wordSet})
-        userTest.save(function(err, result){
-          if(err) console.log(err)
-          else console.log(result)
-        })
+      {
+        $inc: {
+          "trainedWordSets.$.completedTimes": 1,
+        },
       }
+      //{upsert: true},
+    );
+    if (!test2) {
+      userTest.trainedWordSets.push({ completedTimes: 1, WordSet: wordSet });
+      userTest.save(function (err, result) {
+        if (err) console.log(err);
+        else console.log(result);
+      });
+    }
     res.redirect("/collection");
   } catch (err) {
     console.log(err);

@@ -2,6 +2,7 @@ const router = require("express").Router();
 const bcrypt = require("bcrypt");
 const UserModel = require("../models/User.model");
 const isLoggedIn = require("../middleware/isLoggedIn");
+const uploader = require("../middleware/uploader.js");
 
 // @desc    Profile User
 // @route   GET /auth/profile
@@ -10,16 +11,27 @@ router.get("/profile", isLoggedIn, (req, res, next) => {
   res.render("profile.hbs", { user: req.session.user });
 });
 
-router.post("/profile", isLoggedIn, async (req, res, next) => {
-  const { username, name, lastName } = req.params;
-
-  try {
-    const updateUser = await UserModel.findByIdAndUpdate(id, req.params);
-    res.redirect("/auth/profile");
-  } catch (err) {
-    console.log(err);
+router.post(
+  "/profile",
+  isLoggedIn,
+  uploader.single("image"),
+  async (req, res, next) => {
+    const { username, name, lastName } = req.body;
+    const id = req.session.user._id;
+    console.log("intentando subir imagen", req.file);
+    try {
+      const updateUser = await UserModel.findByIdAndUpdate(id, {
+        username: username,
+        name: name,
+        lastName: lastName,
+        avatar: req.file.path,
+      });
+      res.redirect("/auth/profile");
+    } catch (err) {
+      console.log(err);
+    }
   }
-});
+);
 // @desc    Signup User
 // @route   GET /auth/signup
 // @access  Public
