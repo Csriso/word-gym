@@ -3,6 +3,7 @@ const bcrypt = require("bcrypt");
 const UserModel = require("../models/User.model");
 const isLoggedIn = require("../middleware/isLoggedIn");
 const uploader = require("../middleware/uploader.js");
+const {nodemailer, transporter} = require("../utils/nodemailer")
 
 // @desc    Profile User
 // @route   GET /auth/profile
@@ -110,9 +111,40 @@ router.post("/signup", async (req, res, next) => {
     const salt = await bcrypt.genSalt(12);
     const hashPassword = await bcrypt.hash(password, salt);
 
-    const createUser = UserModel.create({
+    
+
+    const createUser = await UserModel.create({
       email,
       password: hashPassword,
+    });
+    //console.log("createduser: ",createUser)
+
+    /*
+    const rand = () => {
+      return Math.random().toString(36).substr(2);
+    };
+    
+    const token = () => {
+      return rand() + rand();
+    };
+    */
+    const activationLink='http://localhost:3000/';
+    //activationLink+=token()
+    activationLink+=createUser._id
+
+    mailOptions = {
+      from: 'youremail@gmail.com',
+      to: email,
+      subject: 'Sending Email using Node.js',
+      text: `That was easy! ${activationLink}`
+    };
+    
+    transporter.sendMail(mailOptions, function(error, info){
+      if (error) {
+        console.log(error);
+      } else {
+        console.log('Email sent: ' + info.response);
+      }
     });
 
     res.redirect("/auth/login");
