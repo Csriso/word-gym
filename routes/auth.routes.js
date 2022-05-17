@@ -117,6 +117,7 @@ router.post("/login", async (req, res, next) => {
 
     req.session.user = findUser;
     req.app.locals.userIsActive = true;
+    req.app.locals.activeUser = findUser;
     res.redirect("/");
   } catch (err) {
     next(err);
@@ -126,6 +127,8 @@ router.post("/login", async (req, res, next) => {
 router.get("/logout", async (req, res, next) => {
   await req.session.destroy();
   req.app.locals.userIsActive = false;
+  req.app.locals.activeUser = undefined;
+
   res.redirect("/auth/login");
 });
 

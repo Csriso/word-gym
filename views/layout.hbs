@@ -109,18 +109,15 @@
                   class="my-1 text-sm leading-5 text-white transition-colors duration-200 transform dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 hover:underline md:mx-4 md:my-0"
                   href="/collection/"
                 >Collections</a>
-                <a
-                  class="my-1 text-sm leading-5 text-white transition-colors duration-200 transform dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 hover:underline md:mx-4 md:my-0"
-                  href="/collection/mycollection"
-                >My collections</a>
+                
               </div>
 
               <div class="flex items-center py-2 -mx-1 md:mx-0">
                 {{#if userIsActive}}
-                  <a
+                  {{!-- <a
                     class="block w-1/2 px-3 py-2 mx-1 text-sm font-medium leading-5 text-center text-white transition-colors duration-200 transform bg-blue-500 rounded-md hover:bg-blue-600 md:mx-0 md:w-auto"
                     href="/auth/logout"
-                  >Logout</a>
+                  >Logout</a> --}}
                 {{else}}
                   <a
                     class="block w-1/2 px-3 py-2 mx-1 text-sm font-medium leading-5 text-center text-white transition-colors duration-200 transform bg-gray-500 rounded-md hover:bg-blue-600 md:mx-2 md:w-auto"
@@ -160,6 +157,65 @@
                     ></path></svg>
                 </button>
               </div>
+        {{#if userIsActive}}
+        <div class="relative inline-block ml-5 ">
+            <!-- Dropdown toggle button -->
+            <button id="dropdownBtn" class="relative z-10 flex items-center p-2 text-sm text-gray-600 bg-white border border-transparent rounded-md focus:border-blue-500 focus:ring-opacity-40 dark:focus:ring-opacity-40 focus:ring-blue-300 dark:focus:ring-blue-400 focus:ring dark:text-white dark:bg-gray-800 focus:outline-none">
+                <span class="mx-1">{{#if activeUser.name}}{{#if activeUser.name}}{{activeUser.name}}{{else}}{{/if}} {{#if activeUser.lastName}}{{activeUser.lastName}}{{else}}{{/if}}{{else}}{{#if activeUser.email}}{{activeUser.email}}{{/if}}{{/if}}</span>
+                <svg class="w-5 h-5 mx-1" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 15.713L18.01 9.70299L16.597 8.28799L12 12.888L7.40399 8.28799L5.98999 9.70199L12 15.713Z" fill="currentColor"></path>
+                </svg>
+            </button>
+
+            <!-- Dropdown menu -->
+            <div class="absolute right-0 z-20 w-56 py-2 mt-2 overflow-hidden bg-white rounded-md shadow-xl dark:bg-gray-800" id="dropdownMenu" style="display:none">
+                <a href="#" class="flex items-center p-3 -mt-2 text-sm text-gray-600 transition-colors duration-200 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white">
+                    <img class="flex-shrink-0 object-cover mx-1 rounded-full w-9 h-9" src="https://images.unsplash.com/photo-1523779917675-b6ed3a42a561?ixid=MnwxMjA3fDB8MHxzZWFyY2h8N3x8d29tYW4lMjBibHVlfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=face&w=500&q=200" alt="jane avatar">
+                    <div class="mx-1">
+                        <h1 class="text-sm font-semibold text-gray-700 dark:text-gray-200">{{#if activeUser.name}}{{#if activeUser.name}}{{activeUser.name}}{{else}}{{/if}} {{#if activeUser.lastName}}{{activeUser.lastName}}{{else}}{{/if}}{{else}}{{#if activeUser.email}}{{activeUser.email}}{{/if}}{{/if}}</h1>
+                        <p class="text-sm text-gray-500 dark:text-gray-400">{{#if activeUser.email}}{{activeUser.email}}{{/if}}</p>
+                    </div>
+                </a>
+
+                <hr class="border-gray-200 dark:border-gray-700 ">
+                
+                <a href="/auth/profile" class="flex items-center p-3 text-sm text-gray-600 capitalize transition-colors duration-200 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white">
+                    <svg class="w-5 h-5 mx-1" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M7 8C7 5.23858 9.23858 3 12 3C14.7614 3 17 5.23858 17 8C17 10.7614 14.7614 13 12 13C9.23858 13 7 10.7614 7 8ZM12 11C13.6569 11 15 9.65685 15 8C15 6.34315 13.6569 5 12 5C10.3431 5 9 6.34315 9 8C9 9.65685 10.3431 11 12 11Z" fill="currentColor"></path>
+                        <path d="M6.34315 16.3431C4.84285 17.8434 4 19.8783 4 22H6C6 20.4087 6.63214 18.8826 7.75736 17.7574C8.88258 16.6321 10.4087 16 12 16C13.5913 16 15.1174 16.6321 16.2426 17.7574C17.3679 18.8826 18 20.4087 18 22H20C20 19.8783 19.1571 17.8434 17.6569 16.3431C16.1566 14.8429 14.1217 14 12 14C9.87827 14 7.84344 14.8429 6.34315 16.3431Z" fill="currentColor"></path>
+                    </svg>
+                    
+                    <span class="mx-1">
+                        view profile
+                    </span>
+                </a>                
+
+                <a href="/collection/mycollection" class="flex items-center p-3 text-sm text-gray-600 capitalize transition-colors duration-200 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
+
+                    <span class="mx-1">
+                        My collections 
+                    </span>
+                </a>
+
+                <hr class="border-gray-200 dark:border-gray-700 ">
+                
+             
+                <a href="/auth/logout" class="flex items-center p-3 text-sm text-gray-600 capitalize transition-colors duration-200 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white">
+                    <svg class="w-5 h-5 mx-1" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M19 21H10C8.89543 21 8 20.1046 8 19V15H10V19H19V5H10V9H8V5C8 3.89543 8.89543 3 10 3H19C20.1046 3 21 3.89543 21 5V19C21 20.1046 20.1046 21 19 21ZM12 16V13H3V11H12V8L17 12L12 16Z" fill="currentColor"></path>
+                    </svg>
+
+                    <span class="mx-1">
+                        Sign Out
+                    </span>
+                </a>
+            </div>
+        </div>
+        {{/if}}
+
+
+
               <!-- Search input on mobile screen -->
               <div class="mt-3 md:hidden">
                 <div class="relative">
@@ -203,6 +259,18 @@
     <script src="https://unpkg.com/flowbite@1.4.5/dist/flowbite.js"></script>
     <script src="/js/splide/splide.min.js"></script>
     <script src="/js/script.js"></script>
+
+    <script>
+      function handleDropdown(){
+        if (document.getElementById("dropdownMenu").style.display ==="none") {
+          document.getElementById("dropdownMenu").style.display = "";
+        }  else{
+          document.getElementById("dropdownMenu").style.display = "none";
+        } 
+      }
+      const dropdownBtn = document.getElementById("dropdownBtn");
+      dropdownBtn.addEventListener("click", handleDropdown);
+    </script>
   </body>
 
 </html>

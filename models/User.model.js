@@ -7,16 +7,21 @@ const userSchema = new Schema(
       unique: true,
     },
     password: String,
-    trainedWordSets: [{
-      completedTimes: {
-        type: Number,
-        default: 0,
+    trainedWordSets: [
+      {
+        completedTimes: {
+          type: Number,
+          default: 0,
+        },
+        WordSet: {
+          type: Schema.Types.ObjectId,
+          ref: "WordSet",
+        },
       },
-      WordSet: {
-        type: Schema.Types.ObjectId,
-        ref: "WordSet",
-      }
-    }],
+    ],
+    username: String,
+    name: String,
+    lastName: String,
   },
   {
     timestamps: true,
