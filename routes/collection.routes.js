@@ -64,7 +64,7 @@ router.post("/create", isLoggedIn, (req, res, next) => {
 router.post(
   "/:id/uploadImage",
   isLoggedIn,
-  uploader.single("avatar"),
+  uploader.single("image"),
   async (req, res, next) => {
     const { id } = req.params;
 
