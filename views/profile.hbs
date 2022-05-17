@@ -7,7 +7,7 @@
     >Profile</h2>
   </div>
 
-  <form method="POST" action="/auth/profile">
+  <form method="POST" action="/auth/profile" enctype="multipart/form-data">
     <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-1">
       <div>
         <label
@@ -97,8 +97,8 @@
   <div>
     <h5 for="img" class="text-gray-700 dark:text-white rounded-full">Current
       avatar:</h5>
-    {{#if wordSet.image}}
-      <img class="w-48" src="{{wordSet.image}}" />
+    {{#if user.avatar}}
+      <img class="w-48 rounded-full mt-4" src="{{user.avatar}}" />
     {{else}}
       <h5 for="img" class="text-gray-700 dark:text-white">No Avatar</h5>
     {{/if}}

@@ -8,24 +8,39 @@ const uploader = require("../middleware/uploader.js");
 // @route   GET /auth/profile
 // @access  Private
 router.get("/profile", isLoggedIn, (req, res, next) => {
+  console.log(req.session.user);
   res.render("profile.hbs", { user: req.session.user });
 });
 
 router.post(
   "/profile",
   isLoggedIn,
-  uploader.single("image"),
+  uploader.single("avatar"),
   async (req, res, next) => {
     const { username, name, lastName } = req.body;
     const id = req.session.user._id;
     console.log("intentando subir imagen", req.file);
     try {
-      const updateUser = await UserModel.findByIdAndUpdate(id, {
-        username: username,
-        name: name,
-        lastName: lastName,
-        avatar: req.file.path,
+      if (!req.file) {
+        await UserModel.findByIdAndUpdate(id, {
+          username: username,
+          name: name,
+          lastName: lastName,
+        });
+      } else {
+        await UserModel.findByIdAndUpdate(id, {
+          username: username,
+          name: name,
+          lastName: lastName,
+          avatar: req.file.path,
+        });
+      }
+      const saveUser = await UserModel.findById(id).then((res) => {
+        req.app.locals.activeUser = res;
+        req.session.user = res;
+        console.log(res);
       });
+
       res.redirect("/auth/profile");
     } catch (err) {
       console.log(err);
