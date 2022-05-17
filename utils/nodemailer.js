@@ -1,4 +1,4 @@
-nodemailer = require('nodemailer');
+nodemailer = require("nodemailer");
 /*
 const transporter = nodemailer.createTransport({
     service: 'gmail',
@@ -9,11 +9,11 @@ const transporter = nodemailer.createTransport({
   });
 */
 const transporter = nodemailer.createTransport({
-    host: 'smtp.ethereal.email',
-    port: 587,
-    auth: {
-        user: 'augustus.daniel89@ethereal.email',
-        pass: 'Gkj47HDrgtuWeh7mkq'
-    }
+  host: "smtp.ethereal.email",
+  port: 587,
+  auth: {
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PW,
+  },
 });
-module.exports = {nodemailer, transporter}
+module.exports = { nodemailer, transporter };
