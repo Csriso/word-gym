@@ -114,9 +114,16 @@ router.post("/signup", async (req, res, next) => {
       email,
       password: hashPassword,
     });
-
-    let activationLink = "http://localhost:3000/auth/";
+    let hostname = "";
+    if (req.hostname == "localhost") {
+      hostname = "http://" + req.hostname + ":3000";
+    } else {
+      hostname = "https://" + req.hostname;
+    }
+    console.log(hostname, req.hostname);
+    let activationLink = hostname + "/auth/";
     activationLink += createUser._id + "/activateAccount";
+    console.log(activationLink);
     let htmlToSend = `
     <div style="background-color: rgb(31 41 55); width: 100%; height: 100%">
       <div style="display:flex;flex-direction:column;justify-content:center; justify-items:center; align-items:center; align-content:center;">
@@ -140,7 +147,7 @@ router.post("/signup", async (req, res, next) => {
       }
     });
 
-    res.redirect("/auth/login");
+    res.redirect("/auth/login?checkYourEmail=checkYourEmail");
   } catch (err) {
     next(err);
   }
@@ -167,6 +174,12 @@ router.get("/login", (req, res, next) => {
     res.render("auth/login.hbs", {
       noHeader: true,
       password: password,
+    });
+  } else if (req.query.checkYourEmailForget) {
+    const { checkYourEmailForget } = req.query;
+    res.render("auth/login.hbs", {
+      noHeader: true,
+      checkYourEmailForget: checkYourEmailForget,
     });
   } else {
     res.render("auth/login.hbs", { noHeader: true });
@@ -213,7 +226,7 @@ router.post("/login", async (req, res, next) => {
       });
       return;
     }
-    req.session.user=findUser
+    req.session.user = findUser;
     res.redirect("/");
   } catch (err) {
     next(err);
@@ -224,6 +237,7 @@ router.get("/:id/activateAccount", async (req, res, next) => {
   const { id } = req.params;
   try {
     let findUser = await UserModel.findByIdAndUpdate(id, { active: true });
+    console.log(findUser);
     res.redirect("/auth/login?account=activated");
   } catch (err) {
     console.log(err);
@@ -234,8 +248,17 @@ router.get("/:id/resendEmail", async (req, res, next) => {
   const { id } = req.params;
   try {
     const findEmail = await UserModel.findById(id);
-    let activationLink = "http://localhost:3000/auth/";
+
+    let hostname = "";
+    if (req.hostname == "localhost") {
+      hostname = "http://" + req.hostname + ":3000";
+    } else {
+      hostname = "https://" + req.hostname;
+    }
+    let activationLink = hostname + "/auth/";
     activationLink += id + "/activateAccount";
+    console.log(activationLink);
+
     let htmlToSend = `
     <div style="background-color: rgb(31 41 55); width: 100%; height: 100%">
       <div style="display:flex;flex-direction:column;justify-content:center; justify-items:center; align-items:center; align-content:center;">
@@ -275,7 +298,13 @@ router.post("/forgetPassword", async (req, res, next) => {
   try {
     const findEmail = await UserModel.find({ email: email });
     if (findEmail) {
-      let activationLink = "http://localhost:3000/auth/";
+      let hostname = "";
+      if (req.hostname == "localhost") {
+        hostname = "http://" + req.hostname + ":3000";
+      } else {
+        hostname = "https://" + req.hostname;
+      }
+      let activationLink = hostname + "/auth/";
       activationLink += findEmail[0]._id + "/resetPassword";
       let htmlToSend = `
     <div style="background-color: rgb(31 41 55); width: 100%; height: 100%">
@@ -301,7 +330,7 @@ router.post("/forgetPassword", async (req, res, next) => {
         }
       });
     }
-    res.redirect("/auth/login?checkYourEmail=true");
+    res.redirect("/auth/login?checkYourEmailForget=checkYourEmailForget");
   } catch (err) {
     next(err);
   }
