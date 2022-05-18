@@ -203,6 +203,7 @@ router.post("/login", async (req, res, next) => {
         accountResend: findUser._id,
         noHeader: true,
       });
+      return;
     }
     const checkPassword = await bcrypt.compare(password, findUser.password);
     if (!checkPassword) {
