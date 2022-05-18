@@ -7,26 +7,28 @@ const WordSet = require("../models/Wordset.model");
 
 router.get("/", async (req, res, next) => {
   try {
-    const wordSets = await WordSetModel.find({ private: false }).populate(
-      "user"
-    ).lean();
+    const wordSets = await WordSetModel.find({ private: false })
+      .populate("user")
+      .lean();
 
-    if(res.locals.user){
-      console.log("inside!!!!")
-      const user = await UserModel.findById(req.session.user._id).select('trainedWordSets').lean()
-      const userTrainedWordSets = user.trainedWordSets
+    if (res.locals.user) {
+      console.log("inside!!!!");
+      const user = await UserModel.findById(req.session.user._id)
+        .select("trainedWordSets")
+        .lean();
+      const userTrainedWordSets = user.trainedWordSets;
 
-    userTrainedWordSets.forEach((userElement => {
-      wordSets.forEach((wordSetElement, index)=>{
-        if(String(userElement.WordSet) === String(wordSetElement._id)){
-          wordSetElement.trainedTimes=userElement.completedTimes
-        }
-      })
-    }))
+      userTrainedWordSets.forEach((userElement) => {
+        wordSets.forEach((wordSetElement, index) => {
+          if (String(userElement.WordSet) === String(wordSetElement._id)) {
+            wordSetElement.trainedTimes = userElement.completedTimes;
+          }
+        });
+      });
     }
     //res.locals.noEdit="hola";
-    const noEdit="hola";
-    res.render("wordset/allsets.hbs", { wordSets });
+    const noEdit = "hola";
+    res.render("wordset/allsets.hbs", { wordSets, noEdit: "Noedit" });
   } catch (err) {
     console.log(err);
   }
@@ -34,21 +36,29 @@ router.get("/", async (req, res, next) => {
 
 router.get("/mycollection", isLoggedIn, async (req, res, next) => {
   try {
-    const user = await UserModel.findById(req.session.user._id).select('trainedWordSets').lean()
+    const user = await UserModel.findById(req.session.user._id)
+      .select("trainedWordSets")
+      .lean();
     //console.log("User:", user)
-    const userTrainedWordSets = user.trainedWordSets//.trainedWordSets//req.session.user.trainedWordSets;
+    const userTrainedWordSets = user.trainedWordSets; //.trainedWordSets//req.session.user.trainedWordSets;
     //console.log("trained WordSets: ", userTrainedWordSets)
-    const wordSets = await WordSetModel.find({ user: req.session.user }).populate("user").lean();
+    const wordSets = await WordSetModel.find({ user: req.session.user })
+      .populate("user")
+      .lean();
 
-    userTrainedWordSets.forEach((userElement => {
-      wordSets.forEach((wordSetElement, index)=>{
-        if(String(userElement.WordSet) === String(wordSetElement._id)){
-          wordSetElement.trainedTimes=userElement.completedTimes
+    userTrainedWordSets.forEach((userElement) => {
+      wordSets.forEach((wordSetElement, index) => {
+        if (String(userElement.WordSet) === String(wordSetElement._id)) {
+          wordSetElement.trainedTimes = userElement.completedTimes;
         }
-      })
-    }))
-    console.log(wordSets)
-    res.render("wordset/allsets.hbs", { wordSets, myCollections: true, user: req.session.user });
+      });
+    });
+    console.log(wordSets);
+    res.render("wordset/allsets.hbs", {
+      wordSets,
+      myCollections: true,
+      user: req.session.user,
+    });
   } catch (err) {
     console.log(err);
   }
