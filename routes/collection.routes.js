@@ -119,7 +119,7 @@ router.get("/:id/train", isLoggedIn, async (req, res, next) => {
   }
 });
 
-router.get("/:id/train/test", isLoggedIn, async (req, res, next) => {
+router.get("/:id/train/complete", isLoggedIn, async (req, res, next) => {
   const { id } = req.params;
   const { completed } = req.body;
   try {
