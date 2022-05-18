@@ -213,6 +213,7 @@ router.post("/login", async (req, res, next) => {
       });
       return;
     }
+    req.session.user=findUser
     res.redirect("/");
   } catch (err) {
     next(err);
