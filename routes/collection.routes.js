@@ -9,8 +9,19 @@ router.get("/", async (req, res, next) => {
   try {
     const wordSets = await WordSetModel.find({ private: false }).populate(
       "user"
-    );
-    const user = req.session.user
+    ).lean();
+    const user = await UserModel.findById(req.session.user._id).select('trainedWordSets').lean()
+    const userTrainedWordSets = user.trainedWordSets
+
+    userTrainedWordSets.forEach((userElement => {
+      wordSets.forEach((wordSetElement, index)=>{
+        if(String(userElement.WordSet) === String(wordSetElement._id)){
+          wordSetElement.trainedTimes=userElement.completedTimes
+        }
+      })
+    }))
+
+
     console.log("User en collections: ", user)
     
     console.log(wordSets);
