@@ -10,6 +10,9 @@ router.get("/", async (req, res, next) => {
     const wordSets = await WordSetModel.find({ private: false }).populate(
       "user"
     );
+    const user = req.session.user
+    console.log("User en collections: ", user)
+    
     console.log(wordSets);
     res.render("wordset/allsets.hbs", { wordSets });
   } catch (err) {
@@ -19,9 +22,21 @@ router.get("/", async (req, res, next) => {
 
 router.get("/mycollection", isLoggedIn, async (req, res, next) => {
   try {
-    const user = req.session.user;
-    const wordSets = await WordSetModel.find({ user: user }).populate("user");
-    res.render("wordset/allsets.hbs", { wordSets, myCollections: true, user });
+    const user = await UserModel.findById(req.session.user._id).select('trainedWordSets').lean()
+    //console.log("User:", user)
+    const userTrainedWordSets = user.trainedWordSets//.trainedWordSets//req.session.user.trainedWordSets;
+    //console.log("trained WordSets: ", userTrainedWordSets)
+    const wordSets = await WordSetModel.find({ user: req.session.user }).populate("user").lean();
+
+    userTrainedWordSets.forEach((userElement => {
+      wordSets.forEach((wordSetElement, index)=>{
+        if(String(userElement.WordSet) === String(wordSetElement._id)){
+          wordSetElement.trainedTimes=userElement.completedTimes
+        }
+      })
+    }))
+    console.log(wordSets)
+    res.render("wordset/allsets.hbs", { wordSets, myCollections: true, user: req.session.user });
   } catch (err) {
     console.log(err);
   }
