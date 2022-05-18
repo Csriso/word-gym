@@ -21,7 +21,7 @@ router.get("/mycollection", isLoggedIn, async (req, res, next) => {
   try {
     const user = req.session.user;
     const wordSets = await WordSetModel.find({ user: user }).populate("user");
-    res.render("wordset/allsets.hbs", { wordSets, myCollections: true });
+    res.render("wordset/allsets.hbs", { wordSets, myCollections: true, user });
   } catch (err) {
     console.log(err);
   }

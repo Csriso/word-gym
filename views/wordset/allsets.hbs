@@ -37,6 +37,7 @@
 
         <div class="p-6">
           <div>
+<div class="flex items-center">
             {{#if private}}
               <span
                 class="text-xs font-medium text-blue-600 uppercase dark:text-blue-600"
@@ -45,7 +46,18 @@
               <span
                 class="text-xs font-medium text-blue-600 uppercase dark:text-blue-400"
               >Public collection</span>
+              
             {{/if}}
+            {{#when this.user._id 'eq' user._id}}
+            <button>
+              <a
+                class="block w-1/2 px-3 py-2 mx-1 text-sm font-medium leading-5 text-center text-white transition-colors duration-200 transform bg-gray-500 rounded-md hover:bg-blue-600 md:mx-2 md:w-auto"
+                href="/collection/{{this._id}}/train"
+              >Edit</a>
+            </button>
+            {{/when}}
+</div>
+
             <a
               href="/collection/{{this.id}}"
               class="block mt-2 text-2xl font-semibold text-gray-800 transition-colors duration-200 transform dark:text-gray-800 hover:text-gray-600 hover:underline"
@@ -76,11 +88,12 @@
               <span class="mx-1 text-xs text-gray-600 dark:text-gray-700">
                 {{{dateFormat this.createdAt}}}
               </span>
-
+<button>
               <a
                 class="block w-1/2 px-3 py-2 mx-1 text-sm font-medium leading-5 text-center text-white transition-colors duration-200 transform bg-gray-500 rounded-md hover:bg-blue-600 md:mx-2 md:w-auto"
                 href="/collection/{{this._id}}/train"
               >Train</a>
+</button>
             </div>
           </div>
         </div>
