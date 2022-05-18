@@ -10,8 +10,11 @@ router.get("/", async (req, res, next) => {
     const wordSets = await WordSetModel.find({ private: false }).populate(
       "user"
     ).lean();
-    const user = await UserModel.findById(req.session.user._id).select('trainedWordSets').lean()
-    const userTrainedWordSets = user.trainedWordSets
+
+    if(res.locals.user){
+      console.log("inside!!!!")
+      const user = await UserModel.findById(req.session.user._id).select('trainedWordSets').lean()
+      const userTrainedWordSets = user.trainedWordSets
 
     userTrainedWordSets.forEach((userElement => {
       wordSets.forEach((wordSetElement, index)=>{
@@ -20,11 +23,8 @@ router.get("/", async (req, res, next) => {
         }
       })
     }))
+    }
 
-
-    console.log("User en collections: ", user)
-    
-    console.log(wordSets);
     res.render("wordset/allsets.hbs", { wordSets });
   } catch (err) {
     console.log(err);
