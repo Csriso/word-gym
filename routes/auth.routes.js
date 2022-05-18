@@ -176,9 +176,10 @@ router.get("/login", (req, res, next) => {
       password: password,
     });
   } else if (req.query.checkYourEmailForget) {
+    const { checkYourEmailForget } = req.query;
     res.render("auth/login.hbs", {
       noHeader: true,
-      checkYourEmailForget,
+      checkYourEmailForget: checkYourEmailForget,
     });
   } else {
     res.render("auth/login.hbs", { noHeader: true });
@@ -329,7 +330,7 @@ router.post("/forgetPassword", async (req, res, next) => {
         }
       });
     }
-    res.redirect("/auth/login?checkYourEmailForget=true");
+    res.redirect("/auth/login?checkYourEmailForget=checkYourEmailForget");
   } catch (err) {
     next(err);
   }
