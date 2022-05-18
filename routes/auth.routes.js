@@ -38,9 +38,7 @@ router.post(
         });
       }
       const saveUser = await UserModel.findById(id).then((res) => {
-        req.app.locals.activeUser = res;
         req.session.user = res;
-        // console.log(res);
       });
 
       res.redirect("/auth/profile");
@@ -214,10 +212,6 @@ router.post("/login", async (req, res, next) => {
       });
       return;
     }
-
-    req.session.user = findUser;
-    req.app.locals.userIsActive = true;
-    req.app.locals.activeUser = findUser;
     res.redirect("/");
   } catch (err) {
     next(err);
@@ -395,9 +389,6 @@ router.post("/:id/resetPassword", async (req, res, next) => {
 
 router.get("/logout", async (req, res, next) => {
   await req.session.destroy();
-  req.app.locals.userIsActive = false;
-  req.app.locals.activeUser = undefined;
-
   res.redirect("/auth/login");
 });
 
