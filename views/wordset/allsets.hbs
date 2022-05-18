@@ -1,103 +1,75 @@
-<section
-  class="max-w-8xl p-6 mx-auto bg-gray-300 rounded-md shadow-md dark:bg-gray-800 my-8 text-black"
->
+<section class="max-w-8xl p-6 mx-auto bg-gray-300 rounded-md shadow-md dark:bg-gray-800 my-8 text-black">
   <div class="flex flex-row justify-between">
     {{#unless myCollections}}
-      <h1 class="text-black dark:text-white text-lg">Public collections</h1>
+    <h1 class="text-black dark:text-white text-lg">Public collections</h1>
     {{else}}
-      <h1 class="text-black dark:text-white text-lg">My collections</h1>
-      <button
-        class="px-4 py-2 font-medium tracking-wide text-white capitalize transition-colors duration-200 transform bg-blue-600 rounded-md hover:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80"
-        onclick="window.location = '/collection/create'"
-      >
-        Create new collection
-      </button>
+    <h1 class="text-black dark:text-white text-lg">My collections</h1>
+    <button
+      class="px-4 py-2 font-medium tracking-wide text-white capitalize transition-colors duration-200 transform bg-blue-600 rounded-md hover:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80"
+      onclick="window.location = '/collection/create'">
+      Create new collection
+    </button>
     {{/unless}}
   </div>
 
   <div class="flex flex-wrap flex-row justify-between">
     {{#each wordSets}}
 
-      <div
-        class="w-96 m-8 mx-auto overflow-hidden bg-gray-200 rounded-lg shadow-md dark:bg-gray-300"
-      >
-        {{#if this.image}}
-          <img
-            class="object-cover w-full h-64"
-            src="{{this.image}}"
-            alt="Article"
-          />
-        {{else}}
-          <img
-            class="object-cover w-full h-64"
-            src="/images/collection.png"
-            alt="Article"
-          />
-        {{/if}}
+    <div class="w-96 m-8 mx-auto overflow-hidden bg-gray-200 rounded-lg shadow-md dark:bg-gray-300">
+      {{#if this.image}}
+      <img class="object-cover w-full h-64" src="{{this.image}}" alt="Article" />
+      {{else}}
+      <img class="object-cover w-full h-64" src="/images/collection.png" alt="Article" />
+      {{/if}}
 
-        <div class="p-6">
-          <div>
-<div class="flex items-center">
+      <div class="p-6">
+        <div>
+          <div class="flex items-center">
             {{#if private}}
-              <span
-                class="text-xs font-medium text-blue-600 uppercase dark:text-blue-600"
-              >Private collection</span>
+            <span class="text-xs font-medium text-blue-600 uppercase dark:text-blue-600">Private collection</span>
             {{else}}
-              <span
-                class="text-xs font-medium text-blue-600 uppercase dark:text-blue-400"
-              >Public collection</span>
-              
+            <span class="text-xs font-medium text-blue-600 uppercase dark:text-blue-400">Public collection</span>
+
             {{/if}}
             {{#when this.user._id 'eq' user._id}}
             <button>
-              <a
-                class="block w-1/2 px-3 py-2 mx-1 text-sm font-medium leading-5 text-center text-white transition-colors duration-200 transform bg-gray-500 rounded-md hover:bg-blue-600 md:mx-2 md:w-auto"
-                href="/collection/{{this._id}}/train"
-              >Edit</a>
+              <a class="block w-1/2 px-3 py-2 mx-1 text-sm font-medium leading-5 text-center text-white transition-colors duration-200 transform bg-gray-500 rounded-md hover:bg-blue-600 md:mx-2 md:w-auto"
+                href="/collection/{{this._id}}/edit">Edit</a>
             </button>
             {{/when}}
-</div>
-
-            <a
-              href="/collection/{{this.id}}"
-              class="block mt-2 text-2xl font-semibold text-gray-800 transition-colors duration-200 transform dark:text-gray-800 hover:text-gray-600 hover:underline"
-            >{{this.name}}</a>
-            <p class="mt-2 text-sm text-gray-600 dark:text-gray-600">
-              {{#if this.words}}
-                Words:
-                {{#each this.words}}{{capitalize this}} {{/each}}
-              {{else}}
-                Words not found in this collection
-              {{/if}}
-            </p>
           </div>
 
-          <div class="mt-4">
+          <a href="/collection/{{this.id}}"
+            class="block mt-2 text-2xl font-semibold text-gray-800 transition-colors duration-200 transform dark:text-gray-800 hover:text-gray-600 hover:underline">{{this.name}}</a>
+          <p class="mt-2 text-sm text-gray-600 dark:text-gray-600">
+            {{#if this.words}}
+            Words:
+            {{#each this.words}}{{capitalize this}} {{/each}}
+            {{else}}
+            Words not found in this collection
+            {{/if}}
+          </p>
+        </div>
+
+        <div class="mt-4">
+          <div class="flex items-center">
             <div class="flex items-center">
-              <div class="flex items-center">
-                <img
-                  class="object-cover h-10 rounded-full"
-                  src="https://images.unsplash.com/photo-1586287011575-a23134f797f9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=48&q=60"
-                  alt="Avatar"
-                />
-                <a
-                  href="#"
-                  class="mx-2 font-semibold text-gray-700 dark:text-gray-700"
-                >{{this.user.email}}</a>
-              </div>
-              <span class="mx-1 text-xs text-gray-600 dark:text-gray-700">
-                {{{dateFormat this.createdAt}}}
-              </span>
-<button>
-              <a
-                class="block w-1/2 px-3 py-2 mx-1 text-sm font-medium leading-5 text-center text-white transition-colors duration-200 transform bg-gray-500 rounded-md hover:bg-blue-600 md:mx-2 md:w-auto"
-                href="/collection/{{this._id}}/train"
-              >Train</a>
-</button>
+              <img class="object-cover h-10 rounded-full"
+                src="https://images.unsplash.com/photo-1586287011575-a23134f797f9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=48&q=60"
+                alt="Avatar" />
+              <a href="#" class="mx-2 font-semibold text-gray-700 dark:text-gray-700">{{this.user.email}}</a>
             </div>
+            <span class="mx-1 text-xs text-gray-600 dark:text-gray-700">
+              {{{dateFormat this.createdAt}}}
+            </span>
+            <button>
+              <a class="block w-1/2 px-3 py-2 mx-1 text-sm font-medium leading-5 text-center text-white transition-colors duration-200 transform bg-gray-500 rounded-md hover:bg-blue-600 md:mx-2 md:w-auto"
+                href="/collection/{{this._id}}/train">Train</a>
+            </button>
           </div>
         </div>
       </div>
+    </div>
     {{/each}}
   </div>
 </section>
