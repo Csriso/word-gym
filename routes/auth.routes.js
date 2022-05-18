@@ -115,7 +115,7 @@ router.post("/signup", async (req, res, next) => {
       password: hashPassword,
     });
 
-    let activationLink = req.hostname + "/auth/";
+    let activationLink = "https://" + req.hostname + "/auth/";
     activationLink += createUser._id + "/activateAccount";
     console.log(activationLink);
     let htmlToSend = `
@@ -235,7 +235,7 @@ router.get("/:id/resendEmail", async (req, res, next) => {
   const { id } = req.params;
   try {
     const findEmail = await UserModel.findById(id);
-    let activationLink = req.hostname + "/auth/";
+    let activationLink = "https://" + req.hostname + "/auth/";
     activationLink += id + "/activateAccount";
     console.log(activationLink);
 
@@ -278,7 +278,7 @@ router.post("/forgetPassword", async (req, res, next) => {
   try {
     const findEmail = await UserModel.find({ email: email });
     if (findEmail) {
-      let activationLink = req.hostname + "/auth/";
+      let activationLink = "https://" + req.hostname + "/auth/";
       activationLink += findEmail[0]._id + "/resetPassword";
       let htmlToSend = `
     <div style="background-color: rgb(31 41 55); width: 100%; height: 100%">
