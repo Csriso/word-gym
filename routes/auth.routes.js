@@ -124,7 +124,7 @@ router.post("/signup", async (req, res, next) => {
       <div style="display:flex;flex-direction:column;justify-content:center; justify-items:center; align-items:center; align-content:center;">
         <h4 style="color:white;">Hello, welcome to Word Gym!</h4>
         <p style="color:white;">Please activate your account on the link below</p>
-        <a style="color:white; width:200px; height:80px; border-radius:25px;" href="${activationLink}">LINK</a>
+        <a style="color:white;" href="${activationLink}">LINK</a>
       </div>
     </div>`;
     mailOptions = {
@@ -183,7 +183,7 @@ router.post("/login", async (req, res, next) => {
 
   if (!email || !password) {
     res.render("auth/login.hbs", {
-      errorMessage: "Introduce los datos de login",
+      errorMessage: "Fill all the inputs",
       noHeader: true,
     });
     return;
@@ -193,7 +193,7 @@ router.post("/login", async (req, res, next) => {
     const findUser = await UserModel.findOne({ email: email });
     if (!findUser) {
       res.render("auth/login.hbs", {
-        errorMessage: "No existe el usuario introducido",
+        errorMessage: "Email dont exists",
         noHeader: true,
       });
       return;
@@ -201,7 +201,7 @@ router.post("/login", async (req, res, next) => {
 
     if (findUser.active === false) {
       res.render("auth/login.hbs", {
-        errorMessage: "Necesitas activar la cuenta de usuario",
+        errorMessage: "You need to active your account, go to your email",
         accountResend: findUser._id,
         noHeader: true,
       });
@@ -209,7 +209,7 @@ router.post("/login", async (req, res, next) => {
     const checkPassword = await bcrypt.compare(password, findUser.password);
     if (!checkPassword) {
       res.render("auth/login.hbs", {
-        errorMessage: "La contraseña no es correcta.",
+        errorMessage: "Bad password, unlucky",
         noHeader: true,
       });
       return;
