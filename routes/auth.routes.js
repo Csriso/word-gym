@@ -114,8 +114,14 @@ router.post("/signup", async (req, res, next) => {
       email,
       password: hashPassword,
     });
-
-    let activationLink = "https://" + req.hostname + "/auth/";
+    let hostname = "";
+    if (req.hostname == "localhost") {
+      hostname = "http://" + req.hostname + ":3000";
+    } else {
+      hostname = "https://" + req.hostname;
+    }
+    console.log(hostname, req.hostname);
+    let activationLink = hostname + "/auth/";
     activationLink += createUser._id + "/activateAccount";
     console.log(activationLink);
     let htmlToSend = `
@@ -141,7 +147,7 @@ router.post("/signup", async (req, res, next) => {
       }
     });
 
-    res.redirect("/auth/login");
+    res.redirect("/auth/login?checkYourEmail=checkYourEmail");
   } catch (err) {
     next(err);
   }
@@ -225,6 +231,7 @@ router.get("/:id/activateAccount", async (req, res, next) => {
   const { id } = req.params;
   try {
     let findUser = await UserModel.findByIdAndUpdate(id, { active: true });
+    console.log(findUser);
     res.redirect("/auth/login?account=activated");
   } catch (err) {
     console.log(err);
@@ -235,7 +242,14 @@ router.get("/:id/resendEmail", async (req, res, next) => {
   const { id } = req.params;
   try {
     const findEmail = await UserModel.findById(id);
-    let activationLink = "https://" + req.hostname + "/auth/";
+
+    let hostname = "";
+    if (req.hostname == "localhost") {
+      hostname = "http://" + req.hostname + ":3000";
+    } else {
+      hostname = "https://" + req.hostname;
+    }
+    let activationLink = hostname + "/auth/";
     activationLink += id + "/activateAccount";
     console.log(activationLink);
 
@@ -278,7 +292,13 @@ router.post("/forgetPassword", async (req, res, next) => {
   try {
     const findEmail = await UserModel.find({ email: email });
     if (findEmail) {
-      let activationLink = "https://" + req.hostname + "/auth/";
+      let hostname = "";
+      if (req.hostname == "localhost") {
+        hostname = "http://" + req.hostname + ":3000";
+      } else {
+        hostname = "https://" + req.hostname;
+      }
+      let activationLink = hostname + "/auth/";
       activationLink += findEmail[0]._id + "/resetPassword";
       let htmlToSend = `
     <div style="background-color: rgb(31 41 55); width: 100%; height: 100%">
