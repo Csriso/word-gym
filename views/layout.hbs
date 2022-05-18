@@ -115,7 +115,7 @@
               </div>
 
               <div class="flex items-center py-2 -mx-1 md:mx-0">
-                {{#if userIsActive}}
+                {{#if user}}
                   {{!-- <a
                     class="block w-1/2 px-3 py-2 mx-1 text-sm font-medium leading-5 text-center text-white transition-colors duration-200 transform bg-blue-500 rounded-md hover:bg-blue-600 md:mx-0 md:w-auto"
                     href="/auth/logout"
@@ -159,11 +159,11 @@
                     ></path></svg>
                 </button>
               </div>
-        {{#if userIsActive}}
+        {{#if user}}
         <div class="relative inline-block ml-5 ">
             <!-- Dropdown toggle button -->
             <button id="dropdownBtn" class="bg-gray-800 relative z-10 flex items-center p-2 text-sm text-white bg-white border border-transparent rounded-md focus:border-blue-500 focus:ring-opacity-40 dark:focus:ring-opacity-40 focus:ring-blue-300 dark:focus:ring-blue-400 focus:ring dark:text-white dark:bg-gray-800 focus:outline-none">
-                <span class="mx-1">{{#if activeUser.name}}{{#if activeUser.name}}{{activeUser.name}}{{else}}{{/if}} {{#if activeUser.lastName}}{{activeUser.lastName}}{{else}}{{/if}}{{else}}{{#if activeUser.email}}{{activeUser.email}}{{/if}}{{/if}}</span>
+                <span class="mx-1">{{#if user.name}}{{#if user.name}}{{user.name}}{{else}}{{/if}} {{#if user.lastName}}{{user.lastName}}{{else}}{{/if}}{{else}}{{#if user.email}}{{user.email}}{{/if}}{{/if}}</span>
                 <svg class="w-5 h-5 mx-1" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M12 15.713L18.01 9.70299L16.597 8.28799L12 12.888L7.40399 8.28799L5.98999 9.70199L12 15.713Z" fill="currentColor"></path>
                 </svg>
@@ -174,8 +174,8 @@
                 <a href="#" class="flex items-center p-3 -mt-2 text-sm text-gray-600 transition-colors duration-200 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white">
                     <img class="flex-shrink-0 object-cover mx-1 rounded-full w-9 h-9" src="https://images.unsplash.com/photo-1523779917675-b6ed3a42a561?ixid=MnwxMjA3fDB8MHxzZWFyY2h8N3x8d29tYW4lMjBibHVlfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=face&w=500&q=200" alt="jane avatar">
                     <div class="mx-1">
-                        <h1 class="text-sm font-semibold text-gray-700 dark:text-gray-200">{{#if activeUser.name}}{{#if activeUser.name}}{{activeUser.name}}{{else}}{{/if}} {{#if activeUser.lastName}}{{activeUser.lastName}}{{else}}{{/if}}{{else}}{{#if activeUser.email}}{{activeUser.email}}{{/if}}{{/if}}</h1>
-                        <p class="text-sm text-gray-500 dark:text-gray-400">{{#if activeUser.email}}{{activeUser.email}}{{/if}}</p>
+                        <h1 class="text-sm font-semibold text-gray-700 dark:text-gray-200">{{#if user.name}}{{#if user.name}}{{user.name}}{{else}}{{/if}} {{#if user.lastName}}{{user.lastName}}{{else}}{{/if}}{{else}}{{#if user.email}}{{user.email}}{{/if}}{{/if}}</h1>
+                        <p class="text-sm text-gray-500 dark:text-gray-400">{{#if user.email}}{{user.email}}{{/if}}</p>
                     </div>
                 </a>
 
@@ -253,6 +253,7 @@
       {{else}}
     <div class="container mx-auto">
       {{/if}}
+      {{user.email}}
       {{{body}}}
     </div>
     <script src="https://unpkg.com/flowbite@1.4.5/dist/flowbite.js"></script>

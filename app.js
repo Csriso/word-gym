@@ -52,6 +52,12 @@ app.locals.appTitle = `${capitalized(projectName)} created with IronLauncher`;
 
 // 👇 Start handling routes here
 const index = require("./routes/index.routes");
+app.use(function (req, res, next) {
+  // Make `user` and `authenticated` available in templates
+  res.locals.user = req.session.user
+  next()
+})
+
 app.use("/", index);
 
 const authRoutes = require("./routes/auth.routes");
