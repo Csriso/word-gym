@@ -24,7 +24,8 @@ router.get("/", async (req, res, next) => {
       })
     }))
     }
-
+    //res.locals.noEdit="hola";
+    const noEdit="hola";
     res.render("wordset/allsets.hbs", { wordSets });
   } catch (err) {
     console.log(err);

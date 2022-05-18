@@ -7,7 +7,7 @@
     <button
       class="px-4 py-2 font-medium tracking-wide text-white capitalize transition-colors duration-200 transform bg-blue-600 rounded-md hover:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80"
       onclick="window.location = '/collection/create'">
-      Create new collection
+      Create new collection {{noEdit}}
     </button>
     {{/unless}}
   </div>
@@ -28,15 +28,15 @@
             {{#if private}}
             <span class="text-xs font-medium text-blue-600 uppercase dark:text-blue-600">Private collection</span>
             {{else}}
-            <span class="text-xs font-medium text-blue-600 uppercase dark:text-blue-400">Public collection</span>
+            <span class="text-xs font-medium text-blue-600 uppercase dark:text-blue-400">Public collection{{noEdit}}</span>
 
             {{/if}}
-            {{#when this.user._id 'eq' user._id}}
+            {{#unless noEdit}}
             <button>
               <a class="block w-1/2 px-3 py-2 mx-1 text-sm font-medium leading-5 text-center text-white transition-colors duration-200 transform bg-gray-500 rounded-md hover:bg-blue-600 md:mx-2 md:w-auto"
                 href="/collection/{{this._id}}/edit">Edit</a>
             </button>
-            {{/when}}
+            {{/unless}}
           </div>
 
           <a href="/collection/{{this.id}}"
