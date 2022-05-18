@@ -10,7 +10,7 @@ const User = require("../models/User.model");
 // @route   GET /auth/profile
 // @access  Private
 router.get("/profile", isLoggedIn, (req, res, next) => {
-  console.log(req.session.user);
+  // console.log(req.session.user);
   res.render("profile.hbs", { user: req.session.user });
 });
 
@@ -21,7 +21,7 @@ router.post(
   async (req, res, next) => {
     const { username, name, lastName } = req.body;
     const id = req.session.user._id;
-    console.log("intentando subir imagen", req.file);
+    // console.log("intentando subir imagen", req.file);
     try {
       if (!req.file) {
         await UserModel.findByIdAndUpdate(id, {
@@ -40,7 +40,7 @@ router.post(
       const saveUser = await UserModel.findById(id).then((res) => {
         req.app.locals.activeUser = res;
         req.session.user = res;
-        console.log(res);
+        // console.log(res);
       });
 
       res.redirect("/auth/profile");
@@ -128,7 +128,7 @@ router.post("/signup", async (req, res, next) => {
       </div>
     </div>`;
     mailOptions = {
-      from: "youremail@gmail.com",
+      from: "info@wordgym.com",
       to: email,
       subject: "Welcome to WordGym! Activate your account.",
       html: `${htmlToSend}`,
@@ -136,9 +136,9 @@ router.post("/signup", async (req, res, next) => {
 
     transporter.sendMail(mailOptions, function (error, info) {
       if (error) {
-        console.log(error);
+        // console.log(error);
       } else {
-        console.log("Email sent: " + info.response);
+        // console.log("Email sent: " + info.response);
       }
     });
 
@@ -163,6 +163,12 @@ router.get("/login", (req, res, next) => {
     res.render("auth/login.hbs", {
       noHeader: true,
       checkYourEmail: checkYourEmail,
+    });
+  } else if (req.query.password) {
+    const { password } = req.query;
+    res.render("auth/login.hbs", {
+      noHeader: true,
+      password: password,
     });
   } else {
     res.render("auth/login.hbs", { noHeader: true });
@@ -242,9 +248,9 @@ router.get("/:id/resendEmail", async (req, res, next) => {
         <a style="color:white; border-radius:25px;" href="${activationLink}">LINK</a>
       </div>
     </div>`;
-    console.log(findEmail);
+    // console.log(findEmail);
     mailOptions = {
-      from: "youremail@gmail.com",
+      from: "info@wordgym.com",
       to: findEmail.email,
       subject: "Welcome to WordGym! Activate your account.",
       html: `${htmlToSend}`,
@@ -254,7 +260,7 @@ router.get("/:id/resendEmail", async (req, res, next) => {
       if (error) {
         console.log(error);
       } else {
-        console.log("Email sent: " + info.response);
+        // console.log("Email sent: " + info.response);
       }
     });
 
@@ -270,13 +276,11 @@ router.get("/forgetPassword", (req, res, next) => {
 
 router.post("/forgetPassword", async (req, res, next) => {
   const { email } = req.body;
-  console.log(email);
   try {
     const findEmail = await UserModel.find({ email: email });
-    console.log(findEmail);
     if (findEmail) {
       let activationLink = "http://localhost:3000/auth/";
-      activationLink += findEmail.id + "/resetPassword";
+      activationLink += findEmail[0]._id + "/resetPassword";
       let htmlToSend = `
     <div style="background-color: rgb(31 41 55); width: 100%; height: 100%">
       <div style="display:flex;flex-direction:column;justify-content:center; justify-items:center; align-items:center; align-content:center;">
@@ -286,10 +290,10 @@ router.post("/forgetPassword", async (req, res, next) => {
       </div>
     </div>`;
       mailOptions = {
-        from: "youremail@gmail.com",
-        to: findEmail.email,
+        from: "info@wordgym.com",
+        to: email,
         subject:
-          "Welcome back to WordGym! retrieve your password in the next link.",
+          "Welcome back to WordGym! Change your password in the next link.",
         html: `${htmlToSend}`,
       };
 
@@ -297,7 +301,7 @@ router.post("/forgetPassword", async (req, res, next) => {
         if (error) {
           console.log(error);
         } else {
-          console.log("Email sent: " + info.response);
+          // console.log("Email sent: " + info.response);
         }
       });
     }
@@ -307,7 +311,87 @@ router.post("/forgetPassword", async (req, res, next) => {
   }
 });
 
-router.get("/:id/resetPassword", async (req, res, next) => {});
+router.get("/:id/resetPassword", (req, res, next) => {
+  const { id } = req.params;
+  res.render("auth/resetPassword.hbs", { id: id });
+});
+
+router.post("/:id/resetPassword", async (req, res, next) => {
+  const { password, repeatPassword } = req.body;
+  const { id } = req.params;
+  // console.log("hagoelPOST", id, password);
+
+  if (!password) {
+    res.render("auth/resetPassword.hbs", {
+      errorMessage: "Fill out all the inputs",
+      noHeader: true,
+      id: id,
+    });
+    return;
+  }
+  if (password.length < 8) {
+    res.render("auth/resetPassword.hbs", {
+      errorMessage: "Password has to be at least 8 characters long",
+      noHeader: true,
+      id: id,
+    });
+    return;
+  }
+
+  if (password !== repeatPassword) {
+    res.render("auth/resetPassword.hbs", {
+      errorMessage: "Passwords dosent match.",
+      noHeader: true,
+      id: id,
+    });
+    return;
+  }
+
+  const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+  if (passwordRegex.test(password) === false) {
+    res.render("auth/resetPassword.hbs", {
+      errorMessage:
+        "contraseña no valida, necesita 8 char, una letra y un numero",
+      noHeader: true,
+      id: id,
+    });
+    return;
+  }
+
+  try {
+    const userEmail = await UserModel.findById(id);
+    const salt = await bcrypt.genSalt(12);
+    const hashPassword = await bcrypt.hash(password, salt);
+
+    const modifyPassword = await UserModel.findByIdAndUpdate(id, {
+      password: hashPassword,
+    });
+
+    let htmlToSend = `
+    <div style="background-color: rgb(31 41 55); width: 100%; height: 100%">
+      <div style="display:flex;flex-direction:column;justify-content:center; justify-items:center; align-items:center; align-content:center;">
+        <h4 style="color:white;">Hello, your password was just modified!</h4>
+      </div>
+    </div>`;
+    mailOptions = {
+      from: "info@wordgym.com",
+      to: userEmail.email,
+      subject: "WordGym! Your password was just modified.",
+      html: `${htmlToSend}`,
+    };
+
+    transporter.sendMail(mailOptions, function (error, info) {
+      if (error) {
+        console.log(error);
+      } else {
+        // console.log("Email sent: " + info.response);
+      }
+    });
+    res.redirect("/auth/login?password=modified");
+  } catch (err) {
+    next(err);
+  }
+});
 
 router.get("/logout", async (req, res, next) => {
   await req.session.destroy();
