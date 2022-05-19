@@ -33,8 +33,8 @@ if (navigator.mediaDevices.getUserMedia) {
       //console.log(mediaRecorder.state);
       //console.log("recorder started");
       record.style.background = "red";
-      record.style.opacity = 0;
-      stop.style.opacity = 1;
+      record.style.display = "none";
+      stop.style.display = "";
       stop.disabled = false;
       record.disabled = true;
     };
@@ -46,8 +46,8 @@ if (navigator.mediaDevices.getUserMedia) {
       record.style.background = "";
       record.style.color = "";
       // mediaRecorder.requestData();
-      record.style.opacity = 1;
-      stop.style.opacity = 0;
+      record.style.display = "";
+      stop.style.display = "none";
       stop.disabled = true;
       record.disabled = false;
     };
@@ -74,7 +74,7 @@ if (navigator.mediaDevices.getUserMedia) {
       //   } else {
       //     clipLabel.textContent = clipName;
       //   }
-
+    
       clipContainer.appendChild(audio);
       clipContainer.appendChild(clipLabel);
       clipContainer.appendChild(deleteButton);
