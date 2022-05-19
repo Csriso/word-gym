@@ -37,7 +37,7 @@
 
         <div class="p-6">
           <div>
-            <div class="flex items-center">
+            <div class="flex items-center justify-between">
               {{#if private}}
                 <span
                   class="text-xs font-medium text-blue-600 uppercase dark:text-blue-600"
@@ -52,7 +52,7 @@
               {{#unless ../noEdit}}
                 <button>
                   <a
-                    class="block w-1/2 px-3 py-2 mx-1 text-sm font-medium leading-5 text-center text-white transition-colors duration-200 transform bg-gray-500 rounded-md hover:bg-blue-600 md:mx-2 md:w-auto"
+                    class="block w-1/2 px-3 py-2 text-sm font-medium leading-5 text-center text-white transition-colors duration-200 transform bg-gray-500 rounded-md hover:bg-blue-600 md:w-auto"
                     href="/collection/{{this._id}}/edit"
                   >Edit</a>
                 </button>
@@ -77,7 +77,7 @@
           </div>
 
           <div class="mt-4">
-            <div class="flex items-center">
+            <div class="flex items-center justify-between">
               <div class="flex items-center">
                 <img
                   class="object-cover h-10 rounded-full"
@@ -92,12 +92,10 @@
               <span class="mx-1 text-xs text-gray-600 dark:text-gray-700">
                 {{{dateFormat this.createdAt}}}
               </span>
-              <button>
                 <a
-                  class="block w-1/2 px-3 py-2 mx-1 text-sm font-medium leading-5 text-center text-white transition-colors duration-200 transform bg-gray-500 rounded-md hover:bg-blue-600 md:mx-2 md:w-auto"
+                  class="block w-1/2 px-3 py-2  text-sm font-medium leading-5 text-center text-white transition-colors duration-200 transform bg-gray-500 rounded-md hover:bg-blue-600  md:w-auto"
                   href="/collection/{{this._id}}/train"
                 >Train</a>
-              </button>
             </div>
           </div>
         </div>
