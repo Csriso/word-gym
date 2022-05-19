@@ -81,6 +81,7 @@ router.get("/mycollection", isLoggedIn, async (req, res, next) => {
 
 router.get("/:id/delete", isLoggedIn, async (req, res, next) => {
   const { id } = req.params;
+  console.log("BORRO");
   try {
     const user = req.session.user;
     const wordSet = await WordSetModel.find({ user: user, _id: id });
@@ -90,7 +91,7 @@ router.get("/:id/delete", isLoggedIn, async (req, res, next) => {
     }
     res.redirect("/collection/mycollection");
   } catch (err) {
-    //console.log(err);
+    console.log(err);
     next(err);
   }
 });
