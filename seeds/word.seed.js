@@ -30,7 +30,6 @@ const addWordsFromSeed = async (wordsArr, wordSetName) => {
     name: "Patata",
     lastName: "Banana",
     active: true,
-    avatar: "https://word-gym.herokuapp.com/images/words.png",
   });
   console.log(user);
   
