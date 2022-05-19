@@ -248,6 +248,7 @@ router.post("/:id", async (req, res, next) => {
     }
     let notFoundWords = [];
     let foundWordsArr = [];
+    /*
     for (let i = 0; i < wordsArr.length; i++) {
       let foundWord = await getWordFromApi(wordsArr[i]);
       if (foundWord.audio !== undefined) {
@@ -256,15 +257,19 @@ router.post("/:id", async (req, res, next) => {
         notFoundWords.push(wordsArr[i]);
       }
     }
+    */
+    let actions = wordsArr.map((word)=>{
+      return getWordFromApi(word)
+    })
+    let results = await Promise.all(actions);
 
-    // wordsArr.forEach(async (elem) => {
-    //   let foundWord = await getWordFromApi(elem);
-    //   if (foundWord.audio !== undefined) {
-    //     foundWordsArr.push(foundWord.word);
-    //   } else {
-    //     notFoundWords.push(elem);
-    //   }
-    // });
+    results.forEach((elem, index) =>{
+      if (elem.audio !== undefined) {
+        foundWordsArr.push(elem.word);
+      } else {
+        notFoundWords.push(wordsArr[index]);
+      }
+    })
 
     wordSet = await WordSetModel.findByIdAndUpdate(
       id,
