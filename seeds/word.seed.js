@@ -60,7 +60,6 @@ const addWordsFromSeed = async (wordsArr) => {
 };
 try {
   addWordsFromSeed(wordArray);
-  process.exit(0);
 } catch (err) {
   // console.log(err);
 }
