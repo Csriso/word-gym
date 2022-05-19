@@ -255,7 +255,7 @@ router.post("/:id", async (req, res, next) => {
   }
 });
 
-router.get("/:id/edit", async (req, res, next) => {
+router.get("/:id/edit", isLoggedIn, async (req, res, next) => {
   const { id } = req.params;
   const { errormsg } = req.query;
   try {
