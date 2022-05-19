@@ -18,7 +18,7 @@ const deleteWords = async () => {
 
 //demo1234
 //$2b$12$GcjEQyAkjJlFFx8u1NzXY.nHVVtLAZkSCaO.Ga.HvXW5vxAfvGfaW
-const addWordsFromSeed = async (wordsArr, wordSetName) => {
+const addWordsFromSeed = async (wordsArr) => {
   await UserModel.deleteMany();
   await WordModel.deleteMany();
   await WordSetModel.deleteMany();
@@ -61,7 +61,7 @@ const addWordsFromSeed = async (wordsArr, wordSetName) => {
   });
 };
 try {
-  addWordsFromSeed(wordArray, "userSeed2");
+  addWordsFromSeed(wordArray);
 } catch (err) {
   console.log(err);
 }
