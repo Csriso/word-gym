@@ -4,6 +4,7 @@ const uploader = require("../middleware/uploader.js");
 const WordSetModel = require("../models/Wordset.model");
 const UserModel = require("../models/User.model");
 const WordSet = require("../models/Wordset.model");
+const { getWordFromApi } = require("../utils/getWord");
 
 router.get("/", async (req, res, next) => {
   try {
@@ -243,10 +244,24 @@ router.post("/:id", async (req, res, next) => {
     if (String(wordSet.user) !== req.session.user._id) {
       res.redirect("/collection");
     }
+    let notFoundWords=[]
+    let foundWords = []
+    wordsArr.forEach(async (word, index, object) =>{
+      let foundWord= await getWordFromApi(word);
+      //console.log("Word: ", word, "foundWord: ", foundWord)
+      if (foundWord.response || foundWord.data) {
+        notFoundWords.push(word)
+        console.log("word: ", word, "index: ", index, "object: ", object)
+        //wordsArr.splice(index, 1)
+      }
+      else if(foundWord.audio) foundWords.push(word)
+      
+    })
+    
     wordSet = await WordSetModel.findByIdAndUpdate(
       id,
       {
-        words: wordsArr,
+        words: foundWords,//wordsArr,
         private,
         name,
       },
@@ -262,6 +277,7 @@ router.post("/:id", async (req, res, next) => {
       wordSet,
       wordsStr,
       private: checked,
+      notFoundWords
     });
   } catch (err) {
     console.log(err);
