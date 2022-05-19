@@ -20,7 +20,10 @@ router.post("/", (req, res, next) => {
     })
     .catch((err) => {
       console.log("ENTRO EN EL ERROR", err);
-      next(err)
+      res.render("word/findWord.hbs", {
+        findError: "Word not found",
+      });
+      return;
     });
 });
 
@@ -33,6 +36,7 @@ router.get("/findWord/:word", (req, res, next) => {
           res.render("word/findWord.hbs", {
             findError: "Word not found",
           });
+          return;
         }
       } else {
         response.word = capitalized(response.word);
@@ -41,7 +45,7 @@ router.get("/findWord/:word", (req, res, next) => {
     })
     .catch((err) => {
       console.log("ENTRO EN EL ERROR", err);
-      next(err)
+      next(err);
     });
 });
 
