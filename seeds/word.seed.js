@@ -1,11 +1,11 @@
 require("../db");
 
 const mongoose = require("mongoose");
-const WordModel = require("../models/Word.model");
-const WordSetModel = require("../models/WordSet.model");
-const UserModel = require("../models/User.model");
+const WordModel = require("./../models/Word.model");
+const WordSetModel = require("./../models/WordSet.model");
+const UserModel = require("./../models/User.model");
 const wordArray = require("./words.json");
-const { getWordFromApi } = require("../utils/getWord");
+const { getWordFromApi } = require("./../utils/getWord");
 
 const deleteWords = async () => {
   try {
