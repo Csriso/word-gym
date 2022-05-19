@@ -93,7 +93,7 @@
                 <a
                   href="#"
                   class="mx-2 font-semibold text-gray-700 dark:text-gray-700 truncate"
-                >{{this.user.email}}</a>
+                >{{#if this.user.username}}{{this.user.username}}{{else}}Anonymous{{/if}}</a>
               </div>
               <span class="mx-1 text-xs text-gray-600 dark:text-gray-700">
                 {{{dateFormat this.createdAt}}}
