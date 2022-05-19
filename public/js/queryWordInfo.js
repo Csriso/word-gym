@@ -9,7 +9,6 @@ words.forEach((elem) => {
     })
     .then((response) => {
       let definition = document.querySelector(`#definition-${response.word}`);
-      console.log(response);
       definition.innerHTML = response.meanings;
       let audio = document.querySelector(`#audio-${response.word}`);
       audio.src = response.audio;
