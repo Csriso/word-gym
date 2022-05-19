@@ -20,15 +20,20 @@ router.get("/", async (req, res, next) => {
       const user = await UserModel.findById(req.session.user._id)
         .select("trainedWordSets")
         .lean();
-      const userTrainedWordSets = user.trainedWordSets;
-
-      userTrainedWordSets.forEach((userElement) => {
-        wordSets.forEach((wordSetElement, index) => {
-          if (String(userElement.WordSet) === String(wordSetElement._id)) {
-            wordSetElement.trainedTimes = userElement.completedTimes;
-          }
+        let userTrainedWordSets
+      if(user && user.trainedWordSets!=null && user.trainedWordSets!=undefined){
+        userTrainedWordSets = user.trainedWordSets;
+        userTrainedWordSets.forEach((userElement) => {
+          wordSets.forEach((wordSetElement, index) => {
+            if (String(userElement.WordSet) === String(wordSetElement._id)) {
+              wordSetElement.trainedTimes = userElement.completedTimes;
+            }
+          });
         });
-      });
+      } 
+      
+
+      
     }
     //res.locals.noEdit="hola";
     const noEdit = "hola";

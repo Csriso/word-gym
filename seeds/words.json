@@ -1,1 +1,6 @@
-["dog", "house", "test"]
+[
+    {"name": "Clothes", "Words": "anorak, jeans, shorts, skirt, shoe, raincoat, helmet, cloak, belt, belt, poncho", "image": "https://res.cloudinary.com/dksexvg9w/image/upload/v1652969160/book-app/clothes_mbaqao.jpg"},
+    {"name": "Furniture", "Words": "bookcase, chair, table, rack, dresser, lamp, mirror, sofa, waterbed, cupboard, bench", "image": "https://res.cloudinary.com/dksexvg9w/image/upload/v1652969299/book-app/furniture_gd18j7.jpg"},
+    {"name": "School", "Words": "assignment, history, homework, portfolio, printer, desk, whiteboard, calculator, bookmark, ruler", "image": "https://res.cloudinary.com/dksexvg9w/image/upload/v1652969451/book-app/school_gdwid0.jpg"},
+    {"name": "Food", "Words": "bacon, blackbeans, cheese, egg, dinner, hamburger, lemonade, noodles, refrigerator, sprinkles", "image": "https://res.cloudinary.com/dksexvg9w/image/upload/v1652969568/book-app/food_n49ozt.jpg"}
+]
