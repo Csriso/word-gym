@@ -58,11 +58,15 @@
                 </button>
               {{/unless}}
             </div>
-
+            {{#if ../myCollections}}
             <a
-              href="/collection/{{this.id}}"
+              href="/collection/{{this._id}}"
               class="block mt-2 text-2xl font-semibold text-gray-800 transition-colors duration-200 transform dark:text-gray-800 hover:text-gray-600 hover:underline"
             >{{this.name}}</a>
+            {{else}}
+                   <p class="block mt-2 text-2xl font-semibold text-gray-800 transition-colors duration-200 transform dark:text-gray-800 hover:text-gray-600 hover:underline"
+            >{{this.name}}</p>
+            {{/if}}
             <p class="mt-2 text-sm text-gray-600 dark:text-gray-600">
               {{#if this.words}}
                 Words:
