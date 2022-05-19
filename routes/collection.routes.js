@@ -47,6 +47,11 @@ router.get("/mycollection", isLoggedIn, async (req, res, next) => {
       .populate("user")
       .lean();
 
+    wordSets.forEach(element => {
+      if (element.words.length<2) element.empty=true
+    })
+    
+
     userTrainedWordSets.forEach((userElement) => {
       wordSets.forEach((wordSetElement, index) => {
         if (String(userElement.WordSet) === String(wordSetElement._id)) {
@@ -54,7 +59,7 @@ router.get("/mycollection", isLoggedIn, async (req, res, next) => {
         }
       });
     });
-    console.log(wordSets);
+    //console.log(wordSets);
     res.render("wordset/allsets.hbs", {
       wordSets,
       myCollections: true,
