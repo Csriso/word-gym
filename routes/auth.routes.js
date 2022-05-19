@@ -37,9 +37,9 @@ router.post(
           avatar: req.file.path,
         });
       }
-      const saveUser = await UserModel.findById(id).then((res) => {
-        req.session.user = res;
-      });
+      const saveUser = await UserModel.findById(id).select('_id email avatar lastName name username')
+      req.session.user = saveUser;
+      //console.log("new user data", saveUser)
 
       res.redirect("/auth/profile");
     } catch (err) {
@@ -202,7 +202,7 @@ router.post("/login", async (req, res, next) => {
   }
 
   try {
-    const findUser = await UserModel.findOne({ email: email });
+    let findUser = await UserModel.findOne({ email: email }).select('_id email avatar lastName name username active password').lean();
     if (!findUser) {
       res.render("auth/login.hbs", {
         errorMessage: "Email dont exists",
@@ -227,7 +227,12 @@ router.post("/login", async (req, res, next) => {
       });
       return;
     }
+    console.log(findUser)
+    
+    delete findUser.password
     req.session.user = findUser;
+
+    console.log(findUser);
     res.redirect("/");
   } catch (err) {
     next(err);
