@@ -30,6 +30,7 @@ router.get("/", async (req, res, next) => {
     const noEdit = "hola";
     res.render("wordset/allsets.hbs", { wordSets, noEdit: "Noedit" });
   } catch (err) {
+    console.log(err)
     next(err);
   }
 });
@@ -60,6 +61,7 @@ router.get("/mycollection", isLoggedIn, async (req, res, next) => {
       user: req.session.user,
     });
   } catch (err) {
+    console.log(err)
     next(err);
   }
 });
@@ -75,6 +77,7 @@ router.get("/:id/delete", isLoggedIn, async (req, res, next) => {
     }
     res.redirect("/collection/mycollection");
   } catch (err) {
+    console.log(err)
     next(err);
   }
 });
@@ -94,7 +97,8 @@ router.post("/create", isLoggedIn, (req, res, next) => {
       res.redirect("/collection/myCollection");
     })
     .catch((err) => {
-      console.log(err);
+      console.log(err)
+      next(err)
     });
 });
 
@@ -119,6 +123,7 @@ router.post(
 
       res.redirect(`/collection/${id}`);
     } catch (err) {
+      console.log(err)
       if (!req.file) res.redirect(`/collection/${id}`);
       // if (err.message.indexOf("format") !== -1) {
       //   console.log("entro");
@@ -141,7 +146,7 @@ router.get("/:id/train", isLoggedIn, async (req, res, next) => {
 
   try {
     const wordSet = await WordSetModel.findById(id);
-    if (String(wordSet.user) !== req.session.user._id) {
+    if (wordSet.private) {
       //|| !wordSet.private
       res.redirect("/collection");
     }
@@ -153,6 +158,7 @@ router.get("/:id/train", isLoggedIn, async (req, res, next) => {
     });
   } catch (err) {
     console.log(err);
+    next(err)
   }
 });
 
@@ -190,6 +196,7 @@ router.get("/:id/train/complete", isLoggedIn, async (req, res, next) => {
     res.redirect("/collection");
   } catch (err) {
     console.log(err);
+    next(err)
   }
 });
 
@@ -216,6 +223,7 @@ router.get("/:id", async (req, res, next) => {
     });
   } catch (err) {
     console.log(err);
+    next(err)
   }
 });
 
@@ -252,6 +260,7 @@ router.post("/:id", async (req, res, next) => {
     });
   } catch (err) {
     console.log(err);
+    next(err)
   }
 });
 
@@ -278,6 +287,7 @@ router.get("/:id/edit", isLoggedIn, async (req, res, next) => {
     });
   } catch (err) {
     console.log(err);
+    next(err)
   }
 });
 
@@ -314,6 +324,7 @@ router.post("/:id/edit", isLoggedIn, async (req, res, next) => {
     });
   } catch (err) {
     console.log(err);
+    next(err)
   }
 });
 
