@@ -57,10 +57,10 @@ const addWordsFromSeed = async (wordsArr) => {
       image: elem.image,
     });
   });
-  process.exit(0);
 };
 try {
   addWordsFromSeed(wordArray);
+  process.exit(0);
 } catch (err) {
   // console.log(err);
 }
