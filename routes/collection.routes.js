@@ -16,12 +16,16 @@ router.get("/", async (req, res, next) => {
       .lean();
 
     if (res.locals.user) {
-      console.log("inside!!!!");
+      // console.log("inside!!!!");
       const user = await UserModel.findById(req.session.user._id)
         .select("trainedWordSets")
         .lean();
-        let userTrainedWordSets
-      if(user && user.trainedWordSets!=null && user.trainedWordSets!=undefined){
+      let userTrainedWordSets;
+      if (
+        user &&
+        user.trainedWordSets != null &&
+        user.trainedWordSets != undefined
+      ) {
         userTrainedWordSets = user.trainedWordSets;
         userTrainedWordSets.forEach((userElement) => {
           wordSets.forEach((wordSetElement, index) => {
@@ -30,16 +34,13 @@ router.get("/", async (req, res, next) => {
             }
           });
         });
-      } 
-      
-
-      
+      }
     }
     //res.locals.noEdit="hola";
     const noEdit = "hola";
     res.render("wordset/allsets.hbs", { wordSets, noEdit: "Noedit" });
   } catch (err) {
-    console.log(err);
+    //console.log(err);
     next(err);
   }
 });
@@ -74,7 +75,6 @@ router.get("/mycollection", isLoggedIn, async (req, res, next) => {
       user: req.session.user,
     });
   } catch (err) {
-    console.log(err);
     next(err);
   }
 });
@@ -90,7 +90,7 @@ router.get("/:id/delete", isLoggedIn, async (req, res, next) => {
     }
     res.redirect("/collection/mycollection");
   } catch (err) {
-    console.log(err);
+    //console.log(err);
     next(err);
   }
 });
@@ -110,7 +110,7 @@ router.post("/create", isLoggedIn, (req, res, next) => {
       res.redirect("/collection/myCollection");
     })
     .catch((err) => {
-      console.log(err);
+      //console.log(err);
       next(err);
     });
 });
@@ -122,7 +122,7 @@ router.post(
   async (req, res, next) => {
     const { id } = req.params;
 
-    console.log("intentando subir imagen", req.file);
+    //console.log("intentando subir imagen", req.file);
     try {
       const wordSet = await WordSetModel.findById(id);
       if (String(wordSet.user) !== req.session.user._id) {
@@ -136,7 +136,7 @@ router.post(
 
       res.redirect(`/collection/${id}`);
     } catch (err) {
-      console.log(err);
+      //console.log(err);
       if (!req.file) res.redirect(`/collection/${id}`);
       // if (err.message.indexOf("format") !== -1) {
       //   console.log("entro");
@@ -163,14 +163,14 @@ router.get("/:id/train", isLoggedIn, async (req, res, next) => {
       //|| !wordSet.private
       res.redirect("/collection");
     }
-    console.log({ wordSet });
+    //console.log({ wordSet });
     res.render("wordset/train.hbs", {
       wordSet,
       noHeader: true,
       fullSize: true,
     });
   } catch (err) {
-    console.log(err);
+    //console.log(err);
     next(err);
   }
 });
@@ -202,13 +202,13 @@ router.get("/:id/train/complete", isLoggedIn, async (req, res, next) => {
     if (!test2) {
       userTest.trainedWordSets.push({ completedTimes: 1, WordSet: wordSet });
       userTest.save(function (err, result) {
-        if (err) console.log(err);
-        else console.log(result);
+        // if (err) console.log(err);
+        // else console.log(result);
       });
     }
     res.redirect("/collection");
   } catch (err) {
-    console.log(err);
+    //console.log(err);
     next(err);
   }
 });
@@ -235,7 +235,7 @@ router.get("/:id", async (req, res, next) => {
       errormsg,
     });
   } catch (err) {
-    console.log(err);
+    //console.log(err);
     next(err);
   }
 });
@@ -263,18 +263,18 @@ router.post("/:id", async (req, res, next) => {
       }
     }
     */
-    let actions = wordsArr.map((word)=>{
-      return getWordFromApi(word)
-    })
+    let actions = wordsArr.map((word) => {
+      return getWordFromApi(word);
+    });
     let results = await Promise.all(actions);
 
-    results.forEach((elem, index) =>{
+    results.forEach((elem, index) => {
       if (elem.audio !== undefined) {
         foundWordsArr.push(elem.word);
       } else {
         notFoundWords.push(wordsArr[index]);
       }
-    })
+    });
 
     wordSet = await WordSetModel.findByIdAndUpdate(
       id,
@@ -296,7 +296,7 @@ router.post("/:id", async (req, res, next) => {
       notFoundWords,
     });
   } catch (err) {
-    console.log(err);
+    //console.log(err);
     next(err);
   }
 });
@@ -323,7 +323,7 @@ router.get("/:id/edit", isLoggedIn, async (req, res, next) => {
       errormsg,
     });
   } catch (err) {
-    console.log(err);
+    //console.log(err);
     next(err);
   }
 });
@@ -351,8 +351,8 @@ router.post("/:id/edit", isLoggedIn, async (req, res, next) => {
     let checked = "";
     if (wordSet.private) checked = "checked";
 
-    console.log("words: ", words, "wordsArr: ", wordsArr);
-    console.log("wordset id", id, wordSet);
+    //console.log("words: ", words, "wordsArr: ", wordsArr);
+    //console.log("wordset id", id, wordSet);
     const wordsStr = wordSet.words.join(", ");
     res.render("wordset/wordset.hbs", {
       wordSet,
@@ -360,7 +360,7 @@ router.post("/:id/edit", isLoggedIn, async (req, res, next) => {
       private: checked,
     });
   } catch (err) {
-    console.log(err);
+    //console.log(err);
     next(err);
   }
 });

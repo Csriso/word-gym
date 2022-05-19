@@ -18,7 +18,7 @@ const canvasCtx = canvas.getContext("2d");
 //main block for doing the audio recording
 
 if (navigator.mediaDevices.getUserMedia) {
-  console.log("getUserMedia supported.");
+  //("getUserMedia supported.");
 
   const constraints = { audio: true };
   let chunks = [];
@@ -30,8 +30,8 @@ if (navigator.mediaDevices.getUserMedia) {
 
     record.onclick = function () {
       mediaRecorder.start();
-      console.log(mediaRecorder.state);
-      console.log("recorder started");
+      //console.log(mediaRecorder.state);
+      //console.log("recorder started");
       record.style.background = "red";
       record.style.opacity = 0;
       stop.style.opacity = 1;
@@ -41,8 +41,8 @@ if (navigator.mediaDevices.getUserMedia) {
 
     stop.onclick = function () {
       mediaRecorder.stop();
-      console.log(mediaRecorder.state);
-      console.log("recorder stopped");
+      //console.log(mediaRecorder.state);
+      // console.log("recorder stopped");
       record.style.background = "";
       record.style.color = "";
       // mediaRecorder.requestData();
@@ -53,7 +53,7 @@ if (navigator.mediaDevices.getUserMedia) {
     };
 
     mediaRecorder.onstop = function (e) {
-      console.log("data available after MediaRecorder.stop() called.");
+      //console.log("data available after MediaRecorder.stop() called.");
 
       //const clipName = prompt('Enter a name for your sound clip?','My unnamed clip');
       document.querySelector(".sound-clips").innerHTML = "";
@@ -85,7 +85,7 @@ if (navigator.mediaDevices.getUserMedia) {
       chunks = [];
       const audioURL = window.URL.createObjectURL(blob);
       audio.src = audioURL;
-      console.log("recorder stopped");
+      //console.log("recorder stopped");
 
       deleteButton.onclick = function (e) {
         let evtTgt = e.target;
@@ -109,12 +109,12 @@ if (navigator.mediaDevices.getUserMedia) {
   };
 
   let onError = function (err) {
-    console.log("The following error occured: " + err);
+    //console.log("The following error occured: " + err);
   };
 
   navigator.mediaDevices.getUserMedia(constraints).then(onSuccess, onError);
 } else {
-  console.log("getUserMedia not supported on your browser!");
+  //console.log("getUserMedia not supported on your browser!");
 }
 
 function visualize(stream) {

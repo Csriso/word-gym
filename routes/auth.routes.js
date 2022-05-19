@@ -37,14 +37,16 @@ router.post(
           avatar: req.file.path,
         });
       }
-      const saveUser = await UserModel.findById(id).select('_id email avatar lastName name username')
+      const saveUser = await UserModel.findById(id).select(
+        "_id email avatar lastName name username"
+      );
       req.session.user = saveUser;
       //console.log("new user data", saveUser)
 
       res.redirect("/auth/profile");
     } catch (err) {
-      console.log(err);
-      next(err)
+      //console.log(err);
+      next(err);
     }
   }
 );
@@ -121,10 +123,10 @@ router.post("/signup", async (req, res, next) => {
     } else {
       hostname = "https://" + req.hostname;
     }
-    console.log(hostname, req.hostname);
+    //console.log(hostname, req.hostname);
     let activationLink = hostname + "/auth/";
     activationLink += createUser._id + "/activateAccount";
-    console.log(activationLink);
+    //console.log(activationLink);
     let htmlToSend = `
     <div style="background-color: rgb(31 41 55); width: 100%; height: 100%">
       <div style="display:flex;flex-direction:column;justify-content:center; justify-items:center; align-items:center; align-content:center;">
@@ -202,7 +204,9 @@ router.post("/login", async (req, res, next) => {
   }
 
   try {
-    let findUser = await UserModel.findOne({ email: email }).select('_id email avatar lastName name username active password').lean();
+    let findUser = await UserModel.findOne({ email: email })
+      .select("_id email avatar lastName name username active password")
+      .lean();
     if (!findUser) {
       res.render("auth/login.hbs", {
         errorMessage: "Email dont exists",
@@ -227,12 +231,12 @@ router.post("/login", async (req, res, next) => {
       });
       return;
     }
-    console.log(findUser)
-    
-    delete findUser.password
+    //console.log(findUser)
+
+    delete findUser.password;
     req.session.user = findUser;
 
-    console.log(findUser);
+    //console.log(findUser);
     res.redirect("/");
   } catch (err) {
     next(err);
@@ -243,11 +247,11 @@ router.get("/:id/activateAccount", async (req, res, next) => {
   const { id } = req.params;
   try {
     let findUser = await UserModel.findByIdAndUpdate(id, { active: true });
-    console.log(findUser);
+    //console.log(findUser);
     res.redirect("/auth/login?account=activated");
   } catch (err) {
-    console.log(err);
-    next(err)
+    //console.log(err);
+    next(err);
   }
 });
 
@@ -264,7 +268,7 @@ router.get("/:id/resendEmail", async (req, res, next) => {
     }
     let activationLink = hostname + "/auth/";
     activationLink += id + "/activateAccount";
-    console.log(activationLink);
+    //console.log(activationLink);
 
     let htmlToSend = `
     <div style="background-color: rgb(31 41 55); width: 100%; height: 100%">
@@ -284,7 +288,7 @@ router.get("/:id/resendEmail", async (req, res, next) => {
 
     transporter.sendMail(mailOptions, function (error, info) {
       if (error) {
-        console.log(error);
+        //console.log(error);
       } else {
         // console.log("Email sent: " + info.response);
       }
@@ -331,7 +335,7 @@ router.post("/forgetPassword", async (req, res, next) => {
 
       transporter.sendMail(mailOptions, function (error, info) {
         if (error) {
-          console.log(error);
+          //console.log(error);
         } else {
           // console.log("Email sent: " + info.response);
         }
@@ -414,7 +418,7 @@ router.post("/:id/resetPassword", async (req, res, next) => {
 
     transporter.sendMail(mailOptions, function (error, info) {
       if (error) {
-        console.log(error);
+        //(error);
       } else {
         // console.log("Email sent: " + info.response);
       }
