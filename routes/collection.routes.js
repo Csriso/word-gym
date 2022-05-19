@@ -7,7 +7,7 @@ const WordSet = require("../models/Wordset.model");
 
 router.get("/", async (req, res, next) => {
   try {
-    const wordSets = await WordSetModel.find({ private: false })
+    const wordSets = await WordSetModel.find({ private: false,  words: { $exists: true, $not: {$size: 0} } })
       .populate("user")
       .lean();
 
