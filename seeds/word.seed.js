@@ -4,6 +4,7 @@ require("../db")
 const mongoose = require("mongoose");
 const WordModel = require("../models/Word.model")
 const WordSetModel = require("../models/WordSet.model")
+const UserModel = require("../models/User.model")
 const wordArray = require("./words.json")
 const { getWordFromApi } = require("../utils/getWord");
 
@@ -16,7 +17,19 @@ const deleteWords = async () => {
         console.log(err)
     }
 }
+
+
+
+//demo1234
+//$2b$12$GcjEQyAkjJlFFx8u1NzXY.nHVVtLAZkSCaO.Ga.HvXW5vxAfvGfaW
 const addWordsFromSeed = async (wordsArr, wordSetName) =>{
+    await UserModel.deleteMany()
+    await WordModel.deleteMany()
+    await WordSetModel.deleteMany()
+    
+    const user = await UserModel.create({email: 'demo@demo.demo', password: '$2b$12$GcjEQyAkjJlFFx8u1NzXY.nHVVtLAZkSCaO.Ga.HvXW5vxAfvGfaW', username: 'demo User', name: 'Patata', lastName: 'Banana', active: true, avatar: 'https://word-gym.herokuapp.com/images/words.png'});
+    console.log(user)
+    
     let actions = wordsArr.map((word)=>{
         return getWordFromApi(word)
       })
@@ -36,7 +49,9 @@ const addWordsFromSeed = async (wordsArr, wordSetName) =>{
             name: wordSetName,
             words: foundWordsArr, //wordsArr,
             private: false,
+            user: user._id
         }
       );
 }
-addWordsFromSeed(wordArray, "test4")
+try{addWordsFromSeed(wordArray, "userSeed2")}
+catch(err){console.log(err)}
