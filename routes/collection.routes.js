@@ -30,7 +30,7 @@ router.get("/", async (req, res, next) => {
     const noEdit = "hola";
     res.render("wordset/allsets.hbs", { wordSets, noEdit: "Noedit" });
   } catch (err) {
-    console.log(err);
+    next(err);
   }
 });
 
@@ -60,7 +60,7 @@ router.get("/mycollection", isLoggedIn, async (req, res, next) => {
       user: req.session.user,
     });
   } catch (err) {
-    console.log(err);
+    next(err);
   }
 });
 
@@ -75,7 +75,7 @@ router.get("/:id/delete", isLoggedIn, async (req, res, next) => {
     }
     res.redirect("/collection/mycollection");
   } catch (err) {
-    console.log(err);
+    next(err);
   }
 });
 
@@ -281,7 +281,7 @@ router.get("/:id/edit", isLoggedIn, async (req, res, next) => {
   }
 });
 
-router.post("/:id/edit", async (req, res, next) => {
+router.post("/:id/edit", isLoggedIn, async (req, res, next) => {
   const { id } = req.params;
   const { name, words } = req.body;
   let private = false;
