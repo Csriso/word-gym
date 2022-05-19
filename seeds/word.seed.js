@@ -12,7 +12,7 @@ const deleteWords = async () => {
     const response = await WordModel.deleteMany();
     return response;
   } catch (err) {
-    console.log(err);
+    //console.log(err);
   }
 };
 
@@ -31,8 +31,8 @@ const addWordsFromSeed = async (wordsArr) => {
     lastName: "Banana",
     active: true,
   });
-  console.log(user);
-  
+  //console.log(user);
+
   wordArray.forEach(async (elem) => {
     let arrayWords = elem.Words.split(", ");
     let actions = arrayWords.map((word) => {
@@ -48,20 +48,18 @@ const addWordsFromSeed = async (wordsArr) => {
         notFoundWords.push(wordsArr[index]);
       }
     });
-    
+
     wordSet = await WordSetModel.create({
-    name: elem.name,
-    words: foundWordsArr, //wordsArr,
-    private: false,
-    user: user._id,
-    image: elem.image
+      name: elem.name,
+      words: foundWordsArr, //wordsArr,
+      private: false,
+      user: user._id,
+      image: elem.image,
     });
-
-
   });
 };
 try {
   addWordsFromSeed(wordArray);
 } catch (err) {
-  console.log(err);
+  // console.log(err);
 }

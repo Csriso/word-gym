@@ -14,12 +14,12 @@ router.post("/", (req, res, next) => {
         }
       } else {
         response.word = capitalized(response.word);
-        console.log({ word: response });
+        //console.log({ word: response });
         res.render("word/word.hbs", response);
       }
     })
     .catch((err) => {
-      console.log("ENTRO EN EL ERROR", err);
+      //("ENTRO EN EL ERROR", err);
       res.render("word/findWord.hbs", {
         findError: "Word not found",
       });
@@ -44,7 +44,7 @@ router.get("/findWord/:word", (req, res, next) => {
       }
     })
     .catch((err) => {
-      console.log("ENTRO EN EL ERROR", err);
+      //console.log("ENTRO EN EL ERROR", err);
       next(err);
     });
 });
@@ -66,7 +66,7 @@ router.get("/findWordTrain/:word", (req, res, next) => {
       }
     })
     .catch((err) => {
-      console.log("ENTRO EN EL ERROR", err);
+      // console.log("ENTRO EN EL ERROR", err);
       next(err);
     });
 });

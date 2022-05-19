@@ -13,5 +13,5 @@ words.forEach((elem) => {
       let audio = document.querySelector(`#audio-${response.word}`);
       audio.src = response.audio;
     })
-    .catch((err) => console.log(err));
+    .catch();
 });

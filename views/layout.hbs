@@ -26,7 +26,11 @@
       theme: { extend: { colors: { clifford: '#da373d', } } } }
     </script>
   </head>
+  {{#if fullSize}}
   <body class="bg-white dark:bg-gray-800">
+  {{else}}
+  <body class="bg-white dark:bg-neutral-900">
+  {{/if}}
  
     {{#unless noHeader}}
       <!-- Require css -->
