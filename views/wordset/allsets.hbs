@@ -35,7 +35,7 @@
           />
         {{/if}}
 
-        <div class="p-6 min-h-[200px] flex flex-col justify-between">
+        <div class="p-6 min-h-[180px] flex flex-col justify-between">
           <div>
             <div class="flex items-center justify-between">
               {{#if private}}
@@ -61,10 +61,10 @@
             {{#if ../myCollections}}
             <a
               href="/collection/{{this._id}}"
-              class="block mt-2 text-2xl font-semibold text-gray-800 transition-colors duration-200 transform dark:text-gray-800 hover:text-gray-600 hover:underline"
+              class="block truncate mt-2 text-2xl font-semibold text-gray-800 transition-colors duration-200 transform dark:text-gray-800 hover:text-gray-600 hover:underline"
             >{{this.name}}</a>
             {{else}}
-                   <p class="block mt-2 text-2xl font-semibold text-gray-800 transition-colors duration-200 transform dark:text-gray-800 hover:text-gray-600 hover:underline"
+                   <p class="block truncate mt-2 text-2xl font-semibold text-gray-800 transition-colors duration-200 transform dark:text-gray-800 hover:text-gray-600 hover:underline"
             >{{this.name}}</p>
             {{/if}}
             <p class="mt-2 text-sm text-gray-600 dark:text-gray-600">
@@ -92,7 +92,7 @@
                 />
                 <a
                   href="#"
-                  class="mx-2 font-semibold text-gray-700 dark:text-gray-700"
+                  class="mx-2 font-semibold text-gray-700 dark:text-gray-700 truncate"
                 >{{this.user.email}}</a>
               </div>
               <span class="mx-1 text-xs text-gray-600 dark:text-gray-700">
