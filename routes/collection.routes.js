@@ -52,7 +52,7 @@ router.get("/mycollection", isLoggedIn, async (req, res, next) => {
       .lean();
     if(!user)res.redirect("/auth/login")
 
-    const wordSets = await WordSetModel.find({ user: user._id }).lean();
+    const wordSets = await WordSetModel.find({ user: user._id }).populate('user').lean();
 
     let userTrainedWordSets
     if(user && user.trainedWordSets!=null && user.trainedWordSets!=undefined){
