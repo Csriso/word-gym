@@ -7,6 +7,7 @@ const getWordFromApi = async (word, definitions = null) => {
     let phonetic = response.data[0].phonetics.find((elem) => {
       return elem.audio;
     });
+    if(!phonetic) phonetic = ""
     const content = {
       word: response.data[0].word,
       audio: phonetic.audio,
