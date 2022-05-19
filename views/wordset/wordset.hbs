@@ -234,3 +234,8 @@
   </div>
 </div>
 
+<script>
+  function deleteHandler(){ window.location.href = "/collection/{{wordSet._id}}/delete";
+  } const btnDeleteSel = document.getElementById("btnDelete");
+  btnDeleteSel.addEventListener("click",deleteHandler);
+</script>
