@@ -57,6 +57,7 @@ const addWordsFromSeed = async (wordsArr) => {
       image: elem.image,
     });
   });
+  mongoose.connection.close();
 };
 try {
   addWordsFromSeed(wordArray);
