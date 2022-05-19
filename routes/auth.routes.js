@@ -44,6 +44,7 @@ router.post(
       res.redirect("/auth/profile");
     } catch (err) {
       console.log(err);
+      next(err)
     }
   }
 );
@@ -241,6 +242,7 @@ router.get("/:id/activateAccount", async (req, res, next) => {
     res.redirect("/auth/login?account=activated");
   } catch (err) {
     console.log(err);
+    next(err)
   }
 });
 

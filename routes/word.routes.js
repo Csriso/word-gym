@@ -20,6 +20,7 @@ router.post("/", (req, res, next) => {
     })
     .catch((err) => {
       console.log("ENTRO EN EL ERROR", err);
+      next(err)
     });
 });
 
@@ -40,6 +41,7 @@ router.get("/findWord/:word", (req, res, next) => {
     })
     .catch((err) => {
       console.log("ENTRO EN EL ERROR", err);
+      next(err)
     });
 });
 
