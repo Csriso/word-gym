@@ -7,11 +7,11 @@ const getWordFromApi = async (word, definitions = null) => {
     let phonetic = response.data[0].phonetics.find((elem) => {
       return elem.audio;
     });
-    if(!phonetic) phonetic = ""
+    if (!phonetic) phonetic = "";
     const content = {
       word: response.data[0].word,
       audio: phonetic.audio,
-      //meanings: response.data[0].meanings
+      meanings: response.data[0].meanings[0].definitions[0].definition,
     };
     if (definitions != null) {
       content["definitions"] = response.data[0].meanings[0].definitions;

@@ -26,13 +26,14 @@
                   <h4
                     class="wordToQuery dark:text-white text-black text-2xl mb-2"
                   >{{capitalize this}}</h4>
+                  <p
+                    class="definition dark:text-white text-black mb-2 w-3/4 text-center"
+                    id="definition-{{this}}"
+                  ></p>
                   <audio id="audio-{{this}}" controls src=""></audio>
                 {{/if}}
               </div>
             </div>
-            {{#if this.word}}{{else}}
-            {{/if}}
-
           </section>
         </li>
       {{/each}}
