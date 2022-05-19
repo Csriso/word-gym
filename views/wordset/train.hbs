@@ -64,8 +64,11 @@
         </li>
       {{/each}}
     </ul>
-    <div
-      class="dark:bg-gray-800 flex flex-col justify-center content-center justify-items-center items-center absolute w-1/2 bottom-0 inset-x-0 h-3 m-auto mb-16 text-white h-3/6 bg-gray-300 rounded-3xl"
+    
+  </div>
+</section>
+<div
+      class="z-50 dark:bg-gray-800 flex flex-col justify-center content-center justify-items-center items-center absolute w-1/2 bottom-0 inset-x-0 h-3 m-auto mb-16 text-white h-3/6 bg-gray-300 rounded-3xl"
     >
       <div class="wrapper audioPlayer relative">
         <header>
@@ -89,19 +92,30 @@
         </section>
       </div>
     </div>
-  </div>
-</section>
 
 <script src="/js/audioRecorder.js"></script>
 <script src="/js/splide/splide.min.js"></script>
 <script src="/js/queryWordInfo.js"></script>
 <script>
-  var splide = new Splide('.splide'); splide.mount();
-  splide.Components.Slides.style("w-full h-full"); if
-  (localStorage.getItem('color-theme') === 'light'){
-  document.querySelector(".splide__arrow--prev svg").style.fill = "#000";
-  document.querySelector(".splide__arrow--next svg").style.fill = "#000"; } let
-  lastSlideSel = document.querySelector(".splide__slide:last-of-type div div");
+  let toggleBtn = document.getElementById("theme-toggle"); 
+  function toggleColor(){ 
+    if(localStorage.getItem('color-theme') === 'light'){
+    document.querySelector(".splide__arrow--prev svg").style.fill = "#FFF";
+    document.querySelector(".splide__arrow--next svg").style.fill = "#FFF";
+     }else{
+      document.querySelector(".splide__arrow--prev svg").style.fill = "#000";
+      document.querySelector(".splide__arrow--next svg").style.fill = "#000"; 
+      }
+   }
+  toggleBtn.addEventListener("click", toggleColor);
+  var splide = new Splide('.splide');
+  splide.mount();
+  splide.Components.Slides.style("w-full h-full");
+  if (localStorage.getItem('color-theme') === 'light'){
+    document.querySelector(".splide__arrow--prev svg").style.fill = "#000";
+    document.querySelector(".splide__arrow--next svg").style.fill = "#000"; 
+  }
+  let lastSlideSel = document.querySelector(".splide__slide:last-of-type div div");
   lastSlideSel.innerHTML += `<a href="/collection/{{wordSet._id}}/train/complete"
   id="finishBtnSlide" class="mt-5 focus:outline-none text-white bg-green-700
   hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg
