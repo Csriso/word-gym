@@ -1,6 +1,6 @@
 ![Logo](https://github.com/Csriso/word-gym/blob/main/public/images/banner.png?raw=true)
 
-# Word Trainer
+# Word GYM
 
 Vocabulary pronunciation trainer, where you can see different words or collections of words so you can try to pronounce them and after that check if the pronunciation is correct.
 
