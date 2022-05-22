@@ -33,14 +33,23 @@ Vocabulary pronunciation trainer, where you can see different words or collectio
 ## Proyect layout
 
 `config/ -> General express js config`
+
 `db/ -> Database config`
+
 `error-handling/ -> Multiple error handling apart of 404 and 500`
+
 `middleware/ -> Middlewares for user logged, not logged, etc`
+
 `models/ -> All app database models`
+
 `public/ -> Static images, javascript and stylesheets`
+
 `routes/ -> Expressjs routes`
+
 `seeds/ -> Data to seed the DB`
+
 `utils/ -> Multiple helper scripts`
+
 `views/ -> All the app views`
 
 ## Routes reference
