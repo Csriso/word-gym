@@ -1,4 +1,4 @@
-![Logo](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/th5xamgrr6se0x5ro4g6.png)
+![Logo](https://github.com/Csriso/word-gym/blob/main/public/images/banner.png?raw=true)
 
 # Word Trainer
 
@@ -6,7 +6,9 @@ Vocabulary pronunciation trainer, where you can see different words or collectio
 
 ## Screenshots
 
-![App Screenshot](https://via.placeholder.com/468x300?text=App+Screenshot+Here)
+![App Screenshot](https://github.com/Csriso/word-gym/blob/main/public/images/brave_Vtu0dqn646.png?raw=true)
+![App Screenshot](https://github.com/Csriso/word-gym/blob/main/public/images/brave_pHXP82mst0.png?raw=true)
+![App Screenshot](https://github.com/Csriso/word-gym/blob/main/public/images/brave_nfXwpd5ba3.png?raw=true)
 
 ## MVP
 
@@ -14,11 +16,15 @@ Vocabulary pronunciation trainer, where you can see different words or collectio
 
 - Basic CRUD for Word and Wordset.
 
-- Fetch the words from external API and save them on MongoDB.
+- Fetch the words from external API.
+
+- Light and dark theme.
+
+- Recorder to listen to your pronunciation in order to compare your voice with another audio.
 
 ## Backlog
 
-- User level that increases finishing collections.
+- User counter of finished collections.
 
 - Public and private collections
 
@@ -26,9 +32,16 @@ Vocabulary pronunciation trainer, where you can see different words or collectio
 
 ## Proyect layout
 
-`models/ -> All models`
-
-`routes/ -> All routes`
+`config/ -> General express js config`
+`db/ -> Database config`
+`error-handling/ -> Multiple error handling apart of 404 and 500`
+`middleware/ -> Middlewares for user logged, not logged, etc`
+`models/ -> All app database models`
+`public/ -> Static images, javascript and stylesheets`
+`routes/ -> Expressjs routes`
+`seeds/ -> Data to seed the DB`
+`utils/ -> Multiple helper scripts`
+`views/ -> All the app views`
 
 ## Routes reference
 

@@ -160,7 +160,6 @@ router.post(
 
 router.get("/:id/train", isLoggedIn, async (req, res, next) => {
   const { id } = req.params;
-
   try {
     const wordSet = await WordSetModel.findById(id);
     res.render("wordset/train.hbs", {
