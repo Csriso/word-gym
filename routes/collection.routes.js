@@ -50,12 +50,12 @@ router.get("/mycollection", isLoggedIn, async (req, res, next) => {
     const user = await UserModel.findById(req.session.user._id)
       .select("trainedWordSets")
       .lean();
-    if(!user)res.redirect("/auth/login")
+    if (!user) res.redirect("/auth/login")
 
     const wordSets = await WordSetModel.find({ user: user._id }).populate('user').lean();
 
     let userTrainedWordSets
-    if(user && user.trainedWordSets!=null && user.trainedWordSets!=undefined){
+    if (user && user.trainedWordSets != null && user.trainedWordSets != undefined) {
       userTrainedWordSets = user.trainedWordSets;
       userTrainedWordSets.forEach((userElement) => {
         wordSets.forEach((wordSetElement, index) => {
@@ -64,19 +64,20 @@ router.get("/mycollection", isLoggedIn, async (req, res, next) => {
           }
         });
       });
-/*
-    wordSets.forEach((element) => {
-      if (element.words.length < 2) element.empty = true;
-    });
-*/
-    //console.log(wordSets);
-    res.render("wordset/allsets.hbs", {
-      wordSets,
-      myCollections: true,
-      user: req.session.user,
-    });
-  }}
-   catch (err) {
+      /*
+          wordSets.forEach((element) => {
+            if (element.words.length < 2) element.empty = true;
+          });
+      */
+      //console.log(wordSets);
+      res.render("wordset/allsets.hbs", {
+        wordSets,
+        myCollections: true,
+        user: req.session.user,
+      });
+    }
+  }
+  catch (err) {
     next(err);
   }
 });
@@ -162,11 +163,6 @@ router.get("/:id/train", isLoggedIn, async (req, res, next) => {
 
   try {
     const wordSet = await WordSetModel.findById(id);
-    if (wordSet.private) {
-      //|| !wordSet.private
-      res.redirect("/collection");
-    }
-    //console.log({ wordSet });
     res.render("wordset/train.hbs", {
       wordSet,
       noHeader: true,
